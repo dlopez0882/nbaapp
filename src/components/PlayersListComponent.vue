@@ -47,21 +47,11 @@ export default {
             "X-RapidAPI-Host": "free-nba.p.rapidapi.com",
         };
 
-        axios
-            .get(
-                "https://free-nba.p.rapidapi.com/players?" +
-                "page=" +
-                this.page +
-                "&per_page=" +
-                this.per_page +
-                "&search=" +
-                this.search,
+        axios.get("https://free-nba.p.rapidapi.com/players?" + "page=" + this.page + "&per_page=" + this.per_page + "&search=" + this.search,
                 { headers }
-            )
-            .then((response) => {
+            ).then((response) => {
                 this.players = response.data.data;
-            })
-            .catch((error) => {
+            }).catch((error) => {
                 console.log(error);
             });
     },
