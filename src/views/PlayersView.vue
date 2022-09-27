@@ -1,6 +1,9 @@
 <template>
     <div class="container">
-        <div class="row mb-3">
+        <div class="home">
+            <img alt="NBA logo" src="../assets/nbalogo.png" />
+        </div>
+        <div class="row text-start mb-3">
             <div class="col-md-4">
                 <label for="search">Player name: </label>
                 <input type="text" class="form-control" name="search" @blur="queryByName($event)"
@@ -78,3 +81,9 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+/* label {
+    text-align:left;
+} */
+</style>
