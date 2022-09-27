@@ -20,13 +20,16 @@
 
             <div class="col-md-4">
                 <label for="page">Page: </label>
-                <input type="text" class="form-control" name="page" @blur="queryByPage($event)"
-                    @keyup.enter="queryByPage($event)" />
+
+                <select name="page" id="page" class="form-control" @change="queryByPage($event)">
+                    <option v-for="page in pages" :value="page">{{ page }}</option>
+                </select>
             </div>
         </div>
     </div>
 
-    <PlayersListComponent :key="reload" :page="page" :per_page="per_page" :search="search"></PlayersListComponent>
+    <!-- @pageCount is emitted from child component -->
+    <PlayersListComponent @pageCount="setPageCount" :key="reload" :page="page" :per_page="per_page" :search="search"></PlayersListComponent>
 </template>
 
 <script>
@@ -38,8 +41,8 @@ export default {
 
     data() {
         return {
-            page: "0",
-            old_page: "",
+            page: "1",
+            pages: "",
             per_page: "25",
             search: "",
             old_search: "",
@@ -65,13 +68,13 @@ export default {
 
         queryByPage(event) {
             this.page = event.target.value;
-
-            // force re-load if page string differs
-            if(this.old_page !== this.page){ 
-                this.reload++;
-                this.old_page = this.page;
-            }
+            this.reload++;
         },
+
+        // set the number of pages based on emitted data from child component
+        setPageCount(page_count) {
+            this.pages = page_count;
+        }
     },
 };
 </script>

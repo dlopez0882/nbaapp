@@ -51,9 +51,13 @@ export default {
                 { headers }
             ).then((response) => {
                 this.players = response.data.data;
+                this.$emit("pageCount", response.data.meta.total_pages);
             }).catch((error) => {
                 console.log(error);
             });
+        
+        
+    
     },
 };
 </script>
