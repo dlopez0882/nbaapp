@@ -51,6 +51,7 @@ export default {
                 { headers }
             ).then((response) => {
                 this.players = response.data.data;
+                // emit number of pages back to parent component
                 this.$emit("pageCount", response.data.meta.total_pages);
             }).catch((error) => {
                 console.log(error);
