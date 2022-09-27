@@ -30,8 +30,8 @@ export default {
     name: "PlayersListComponent",
 
     props: {
-        page: Number,
-        per_page: Number,
+        page: String,
+        per_page: String,
         search: String,
     },
 

@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <PlayersListComponent :key="reload" :page="page" :per_page="per_page" :search="search" />
+    <PlayersListComponent :key="reload" :page="page" :per_page="per_page" :search="search"></PlayersListComponent>
 </template>
 
 <script>
@@ -39,8 +39,10 @@ export default {
     data() {
         return {
             page: "0",
+            old_page: "",
             per_page: "25",
             search: "",
+            old_search: "",
             reload: 0,
         };
     },
@@ -53,15 +55,21 @@ export default {
 
         queryByName(event) {
             this.search = event.target.value;
-            if (this.search.length > 0) {
+
+            // force re-load if search string differs
+            if(this.old_search !== this.search){ 
                 this.reload++;
+                this.old_search = this.search;
             }
         },
 
         queryByPage(event) {
             this.page = event.target.value;
-            if (this.page.length > 0) {
+
+            // force re-load if page string differs
+            if(this.old_page !== this.page){ 
                 this.reload++;
+                this.old_page = this.page;
             }
         },
     },
