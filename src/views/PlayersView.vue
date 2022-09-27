@@ -4,7 +4,7 @@
         <div class="row text-start mb-3">
             <div class="col-md-4">
                 <label for="search">Player name: </label>
-                <input type="text" class="form-control" name="search" @blur="queryByName($event)"
+                <input type="text" class="form-control" name="search" @blur="queryByName($event)" placeholder="i.e. Kobe Bryant"
                     @keyup.enter="queryByName($event)" />
             </div>
 
@@ -21,7 +21,6 @@
 
             <div class="col-md-4">
                 <label for="page">Page: </label>
-
                 <select name="page" id="page" class="form-control" @change="queryByPage($event)">
                     <option v-for="page in pages" :value="page">{{ page }}</option>
                 </select>
