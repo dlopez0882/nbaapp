@@ -1,8 +1,6 @@
 <template>
     <div class="container">
-        <div class="home">
-            <img alt="NBA logo" src="../assets/nbalogo.png" />
-        </div>
+        <LogoComponent></LogoComponent>
         <div class="row text-start mb-3">
             <div class="col-md-4">
                 <label for="search">Player name: </label>
@@ -37,10 +35,14 @@
 
 <script>
 import PlayersListComponent from "@/components/PlayersListComponent.vue";
+import LogoComponent from "@/components/LogoComponent.vue";
 
 export default {
     name: "PlayersView",
-    components: { PlayersListComponent },
+    components: { 
+        PlayersListComponent, 
+        LogoComponent 
+    },
 
     data() {
         return {
