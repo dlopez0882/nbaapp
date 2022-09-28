@@ -1,35 +1,46 @@
 <template>
     <div class="container">
         <LogoComponent></LogoComponent>
-        <div class="row text-start mb-3">
-            <div class="col-md-4">
-                <label for="search">Player name: </label>
-                <input type="text" class="form-control" name="search" @blur="queryByName($event)" placeholder="i.e. Kobe Bryant"
-                    @keyup.enter="queryByName($event)" />
-            </div>
-
-            <div class="col-md-4">
-                <label for="per-page-option">Records per page: </label>
-                <select name="per-page-option" id="perpageoption" class="form-control" @change="onChange($event)"
+        <div class="row justify-content-between mb-3">
+            <div class="col-md-4 text-start">
+                <span>Show: </span>
+                <select name="per-page-option" id="perpageoption" @change="onChange($event)"
                     v-model="per_page">
                     <option value="25">25</option>
                     <option value="50">50</option>
                     <option value="75">75</option>
                     <option value="100">100</option>
                 </select>
+                <span> records</span>
             </div>
 
-            <div class="col-md-4">
+            <!-- need to paginate this later... -->
+            <!-- <div class="col-md-4">
                 <label for="page">Page: </label>
                 <select name="page" id="page" class="form-control" @change="queryByPage($event)">
                     <option v-for="page in pages" :value="page">{{ page }}</option>
                 </select>
+            </div> -->
+
+            <div class="col-md-4 text-end">
+                <input type="text" name="search" class="form-control" @blur="queryByName($event)" placeholder="Player search"
+                    @keyup.enter="queryByName($event)" />
             </div>
         </div>
     </div>
 
     <!-- @pageCount is emitted from child component -->
     <PlayersListComponent @pageCount="setPageCount" :key="reload" :page="page" :per_page="per_page" :search="search"></PlayersListComponent>
+    <div class="container">
+        <div class="row justify-content-between mb-3">
+            <div class="col-md-4 text-start">
+                <span>Page: </span>
+                <select name="page" id="page" @change="queryByPage($event)">
+                    <option v-for="page in pages" :value="page">{{ page }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
