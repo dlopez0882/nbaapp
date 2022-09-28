@@ -1,9 +1,11 @@
 <template>
     <div class="container">
-        <div id="gameInfo" v-for="dataPoint in gameData" :key="dataPoint.id">
-            <p>Date: {{ dataPoint.date }}</p>
-            <p>Matchup: {{ dataPoint.visitor_team.full_name }} at {{ dataPoint.home_team.full_name }}</p>
-            <p>Score: {{ dataPoint.visitor_team.abbreviation }} {{ dataPoint.visitor_team_score }} | {{ dataPoint.home_team.abbreviation }} {{ dataPoint.home_team_score }} ({{ dataPoint.status }})</p>
+        <div id="gameInfo" class="card mb-3" v-for="dataPoint in gameData" :key="dataPoint.id">
+            <div class="card-body">
+                <p>Date: {{ dataPoint.date }}</p>
+                <p>Matchup: {{ dataPoint.visitor_team.full_name }} at {{ dataPoint.home_team.full_name }}</p>
+                <p>Score: {{ dataPoint.visitor_team.abbreviation }} {{ dataPoint.visitor_team_score }} | {{ dataPoint.home_team.abbreviation }} {{ dataPoint.home_team_score }} ({{ dataPoint.status }})</p>
+            </div>
         </div>
     </div>
 </template>
@@ -27,7 +29,6 @@ import axios from 'axios';
             }
             axios.get("https://free-nba.p.rapidapi.com/games?seasons[]=2019&team_ids[]=14&per_page=100",{ headers })
                 .then(response => {
-                    console.log(response.data.data);
                     this.gameData = response.data.data;
                 })
                 .catch(error => {
