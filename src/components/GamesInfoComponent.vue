@@ -22,12 +22,17 @@ import axios from 'axios';
             };
         },
 
+        props: {
+            "team_ids": Array,
+            "season": Array,
+        },
+
         mounted() {
             const headers = {
                 "X-RapidAPI-Key": "959819e95cmshecf23a99cc98e23p15b9d9jsn5e3fd589ab8a",
                 "X-RapidAPI-Host": "free-nba.p.rapidapi.com",
             }
-            axios.get("https://free-nba.p.rapidapi.com/games?seasons[]=2019&team_ids[]=14&per_page=100",{ headers })
+            axios.get("https://free-nba.p.rapidapi.com/games?seasons[]=" + this.season + "&team_ids[]=" + this.team_ids + "&per_page=100",{ headers })
                 .then(response => {
                     this.gameData = response.data.data;
                 })

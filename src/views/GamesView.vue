@@ -1,16 +1,26 @@
 <template>
     <div class="container mb-3">
         <form id="gamesQueryBuilder" @submit.prevent="queryGames">
-            <label>Select team(s)</label>
-            <select id="teamsMenu" class="form-select" multiple aria-label="select teams">
-                <option value="" selected>-- Select teams --</option>
-                <option v-for="team in teams" :key="team.id" :value="team.id">{{ team.full_name }}</option>
-            </select>
+            <div class="row justify-content-between">
+                <div class="form-group col-md-4 mb-3">
+                    <label class="float-start" for="teams">Team:</label>
+                    <select name="teams" id="teams" class="form-control" aria-label="select team" v-model="selectedTeam">
+                        <option value="" selected>-- Select team --</option>
+                        <option v-for="team in teams" :key="team.id" :value="team.id">{{ team.full_name }}</option>
+                    </select>
+                </div>
 
-            <button type="submit">Show games!</button>
+                <div class="form-group col-md-4 mb-3">
+                    <label class="float-start" for="seasons">Season:</label>
+                    <input type="text" name="seasons" id="seasons" class="form-control" v-model="season">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Show games!</button>
+            </div>
+            
         </form>
     </div>
-    <GamesInfoComponent></GamesInfoComponent>
+    <GamesInfoComponent :key="reload" :team_ids="selectedTeam" :season="season"></GamesInfoComponent>
 </template>
 
 <script>
@@ -27,6 +37,9 @@
         data() {
             return {
                 teams: {},
+                selectedTeam: "",
+                season: "",
+                reload: 0,
             };
         },
 
@@ -48,7 +61,7 @@
 
         methods: {
             queryGames() {
-                //
+                this.reload++;
             },
         }
     };
