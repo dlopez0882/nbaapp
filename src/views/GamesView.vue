@@ -14,6 +14,14 @@
                     <label class="float-start" for="seasons">Season:</label>
                     <input type="text" name="seasons" id="seasons" class="form-control" v-model="season">
                 </div>
+                
+                <!-- TODO: fix input ID attr to be unique with ID -->
+                <div class="form-check" v-for="seasonOption in seasonOptions" @change="buildSeasonsQueryString()">
+                    <input class="form-check-input" type="checkbox" :value="seasonOption" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        {{ seasonOption }}
+                    </label>
+                </div>
 
                 <button type="submit" class="btn btn-primary">Show games!</button>
             </div>
@@ -38,6 +46,7 @@
             return {
                 teams: {},
                 selectedTeam: "",
+                seasonOptions: ["2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022"],
                 season: "",
                 reload: 0,
             };
@@ -62,6 +71,15 @@
         methods: {
             queryGames() {
                 this.reload++;
+            },
+
+            buildSeasonsQueryString() {
+                const checked = document.querySelectorAll('input[type="checkbox"]:checked');
+                this.season = Array.from(checked).map(x => x.value);
+                /* 
+                * TODO: need to figure out make season array that works with API.
+                * ex. "seasons[]=2019&seasons[]=2020"
+                */
             },
         }
     };
