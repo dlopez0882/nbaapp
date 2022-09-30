@@ -16,7 +16,7 @@
                 </div>
                 
                 <!-- TODO: fix input ID attr to be unique with ID -->
-                <div class="form-check" v-for="seasonOption in seasonOptions" @change="buildSeasonsQueryString()">
+                <div class="form-check" v-for="seasonOption in seasonOptions" @change="buildSeasonsArray()">
                     <input class="form-check-input" type="checkbox" :value="seasonOption" id="flexCheckDefault">
                     <label class="form-check-label" for="flexCheckDefault">
                         {{ seasonOption }}
@@ -73,13 +73,9 @@
                 this.reload++;
             },
 
-            buildSeasonsQueryString() {
+            buildSeasonsArray() {
                 const checked = document.querySelectorAll('input[type="checkbox"]:checked');
                 this.season = Array.from(checked).map(x => x.value);
-                /* 
-                * TODO: need to figure out make season array that works with API.
-                * ex. "seasons[]=2019&seasons[]=2020"
-                */
             },
         }
     };

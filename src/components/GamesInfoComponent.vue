@@ -28,11 +28,14 @@ import axios from 'axios';
         },
 
         mounted() {
+            // format seasons params
+            const seasonsParams = this.queryStringBuilder(this.season);
+
             const headers = {
                 "X-RapidAPI-Key": "959819e95cmshecf23a99cc98e23p15b9d9jsn5e3fd589ab8a",
                 "X-RapidAPI-Host": "free-nba.p.rapidapi.com",
             }
-            axios.get("https://free-nba.p.rapidapi.com/games?seasons[]=" + this.season + "&team_ids[]=" + this.team_ids + "&per_page=100",{ headers })
+            axios.get("https://free-nba.p.rapidapi.com/games?" + seasonsParams + "&team_ids[]=" + this.team_ids + "&per_page=100&page=3",{ headers })
                 .then(response => {
                     this.gameData = response.data.data;
                 })
@@ -45,7 +48,20 @@ import axios from 'axios';
             dateFormatter(timestamp) {
                 let d = new Date(timestamp);
                 return d.toDateString();
-            }
+            },
+
+            // format params that need to be passed as an array into API 
+            queryStringBuilder(data) {
+                let queryString = "";
+                for(let i = 0; i < data.length; i++) {
+                    queryString += "seasons[]=" + data[i] + "&";
+                }
+
+                // remove last "&" symbol
+                queryString = queryString.slice(0, -1);
+
+                return queryString;
+            },
         }
     };
 </script>
