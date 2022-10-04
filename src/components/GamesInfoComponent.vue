@@ -23,7 +23,7 @@ import axios from 'axios';
         },
 
         props: {
-            "team_ids": Array,
+            "team_ids": Number,
             "season": Array,
         },
 
@@ -35,7 +35,8 @@ import axios from 'axios';
                 "X-RapidAPI-Key": "959819e95cmshecf23a99cc98e23p15b9d9jsn5e3fd589ab8a",
                 "X-RapidAPI-Host": "free-nba.p.rapidapi.com",
             }
-            axios.get("https://free-nba.p.rapidapi.com/games?" + seasonsParams + "&team_ids[]=" + this.team_ids + "&per_page=100&page=3",{ headers })
+            // TODO: make per_page and page parameters dynamic
+            axios.get("https://free-nba.p.rapidapi.com/games?" + seasonsParams + "&team_ids[]=" + this.team_ids + "&per_page=100&page=1",{ headers })
                 .then(response => {
                     this.gameData = response.data.data;
                 })
