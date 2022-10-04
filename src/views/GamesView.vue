@@ -1,33 +1,44 @@
 <template>
     <div class="container mb-3">
-        <form id="gamesQueryBuilder" @submit.prevent="queryGames">
-            <div class="row justify-content-between">
-                <div class="form-group col-md-4 mb-3">
-                    <label class="float-start" for="teams">Team:</label>
-                    <select name="teams" id="teams" class="form-control" aria-label="select team" v-model="selectedTeam">
-                        <option value="" selected>-- Select team --</option>
-                        <option v-for="team in teams" :key="team.id" :value="team.id">{{ team.full_name }}</option>
-                    </select>
+        <fieldset class="form-group border p-3">
+            <form id="gamesQueryBuilder" @submit.prevent="queryGames">
+                <!-- <div class="row justify-content-between"> -->
+                <div class="row">
+                    <div class="form-group col-md-4 mb-3">
+                        <label for="teams">Team:</label>
+                        <select name="teams" id="teams" class="form-control" aria-label="select team" v-model="selectedTeam">
+                            <option value="" selected>-- Select team --</option>
+                            <option v-for="team in teams" :key="team.id" :value="team.id">{{ team.full_name }}</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="form-group col-md-4 mb-3">
-                    <label class="float-start" for="seasons">Season:</label>
-                    <input type="text" name="seasons" id="seasons" class="form-control" v-model="season">
+                <div class="row">
+                    <div class="form-group">
+                        <fieldset class="group reset"> 
+                            <legend class="px-2">Select season(s)</legend> 
+                            <ul class="checkbox"> 
+                                <li class="form-check" v-for="seasonOption in seasonOptions" @change="buildSeasonsArray()">
+                                    <input class="form-check-input" type="checkbox" :value="seasonOption" :id="'flexCheckDefault-' + seasonOption">
+                                    <label class="form-check-label" :for="'flexCheckDefault-' + seasonOption">
+                                        {{ seasonOption }}
+                                    </label>
+                                </li>
+                            </ul>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary float-end">Show games!</button>
+                    </div>
                 </div>
                 
-                <!-- TODO: fix input ID attr to be unique with ID -->
-                <div class="form-check" v-for="seasonOption in seasonOptions" @change="buildSeasonsArray()">
-                    <input class="form-check-input" type="checkbox" :value="seasonOption" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        {{ seasonOption }}
-                    </label>
-                </div>
-
-                <button type="submit" class="btn btn-primary">Show games!</button>
-            </div>
-            
-        </form>
+            </form>
+        </fieldset>
     </div>
+    
     <GamesInfoComponent :key="reload" :team_ids="selectedTeam" :season="season"></GamesInfoComponent>
 </template>
 
@@ -80,3 +91,54 @@
         }
     };
 </script>
+
+<style scoped>
+.container {
+    text-align: left;
+}
+fieldset.group  { 
+  margin: 0; 
+  padding: 0; 
+  margin-bottom: 1.25em; 
+  padding: .125em; 
+  border: 1px solid #ced4da;
+  border-radius: .375rem;
+  /* text-align: left; */
+  width: 80%;
+} 
+
+fieldset, legend {
+   all: revert;
+}
+
+.reset {
+    all: revert;
+}
+
+fieldset.group legend { 
+  margin: 0; 
+  padding: 0; 
+  margin-left: 20px; 
+  font-size: 100%; 
+  color: #2c3e50; 
+} 
+
+
+ul.checkbox  { 
+  margin: 0; 
+  padding: 0; 
+  margin-left: 20px; 
+  list-style: none; 
+} 
+
+ul.checkbox li input { 
+  margin-right: .25em; 
+} 
+
+ul.checkbox li { 
+  border: 1px transparent solid; 
+  display:inline-block;
+  width:12em;
+} 
+
+</style>
