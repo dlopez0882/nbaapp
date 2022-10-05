@@ -32,19 +32,20 @@ import axios from 'axios';
 
         props: {
             "team_ids": Number,
-            "seasons": Array,
+            "season": Number,
         },
 
         mounted() {
+            // Leaving here in case a potential solution for sorting API data becomes available in future
             // format seasons params
-            const seasonsParams = this.queryStringBuilder(this.seasons);
+            // const seasonsParams = this.queryStringBuilder(this.season);
 
             const headers = {
                 "X-RapidAPI-Key": "959819e95cmshecf23a99cc98e23p15b9d9jsn5e3fd589ab8a",
                 "X-RapidAPI-Host": "free-nba.p.rapidapi.com",
             }
             // TODO: make per_page and page parameters dynamic
-            axios.get("https://free-nba.p.rapidapi.com/games?" + seasonsParams + "&team_ids[]=" + this.team_ids + "&per_page=100&page=1",{ headers })
+            axios.get("https://free-nba.p.rapidapi.com/games?seasons[]=" + this.season + "&team_ids[]=" + this.team_ids + "&per_page=100&page=1",{ headers })
                 .then(response => {
                     this.gameData = response.data.data;
                 })
@@ -59,18 +60,19 @@ import axios from 'axios';
                 return d.toDateString();
             },
 
+            // Leaving here in case a potential solution for sorting API data becomes available in future
             // format params that need to be passed as an array into API 
-            queryStringBuilder(data) {
-                let queryString = "";
-                for(let i = 0; i < data.length; i++) {
-                    queryString += "seasons[]=" + data[i] + "&";
-                }
+            // queryStringBuilder(data) {
+            //     let queryString = "";
+            //     for(let i = 0; i < data.length; i++) {
+            //         queryString += "seasons[]=" + data[i] + "&";
+            //     }
 
-                // remove last "&" symbol
-                queryString = queryString.slice(0, -1);
+            //     // remove last "&" symbol
+            //     queryString = queryString.slice(0, -1);
 
-                return queryString;
-            },
+            //     return queryString;
+            // },
         }
     };
 </script>

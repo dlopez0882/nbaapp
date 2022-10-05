@@ -2,8 +2,7 @@
     <div class="container mb-3">
         <fieldset class="form-group border p-3">
             <form id="gamesQueryBuilder" @submit.prevent="queryGames">
-                <!-- <div class="row justify-content-between"> -->
-                <div class="row">
+                <div class="row row justify-content-around">
                     <div class="form-group col-md-4 mb-3">
                         <label for="teams">Team:</label>
                         <select name="teams" id="teams" class="form-control" aria-label="select team" v-model="selectedTeam">
@@ -11,9 +10,21 @@
                             <option v-for="team in teams" :key="team.id" :value="team.id">{{ team.full_name }}</option>
                         </select>
                     </div>
+
+                    <div class="form-group col-md-4 mb-3">
+                        <label for="teams">Season:</label>
+                        <select name="seasons" id="seasons" class="form-control" aria-label="select season" v-model="selectedSeason">
+                            <option value="" selected>-- Select season --</option>
+                            <option v-for="season in seasonOptions" :value="season.value">{{ season.displayValue }}</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="row">
+                <!-- 
+                    Note: Checkbox approach does not work since ordering of data returned from API is not reliable 
+                    Leaving here for possible future solution.
+                -->
+                <!-- <div class="row">
                     <div class="form-group">
                         <fieldset class="group reset"> 
                             <legend class="px-2">Select season(s)</legend> 
@@ -27,7 +38,7 @@
                             </ul>
                         </fieldset>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="row">
                     <div class="form-group">
@@ -39,7 +50,7 @@
         </fieldset>
     </div>
     
-    <GamesInfoComponent :key="reload" :team_ids="selectedTeam" :seasons="selectedSeasons"></GamesInfoComponent>
+    <GamesInfoComponent :key="reload" :team_ids="selectedTeam" :season="selectedSeason"></GamesInfoComponent>
 </template>
 
 <script>
@@ -57,8 +68,8 @@
             return {
                 teams: [], // data returned from /teams API that populates Team selection menu
                 selectedTeam: "", // data to be passed to GamesInfoComponent prop "team_ids"
-                seasonOptions: ["2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022"],
-                selectedSeasons: [],
+                seasonOptions: [],
+                selectedSeason: "",
                 reload: 0,
             };
         },
@@ -77,6 +88,15 @@
                 .catch(error => {
                     console.log(error);
                 })
+
+            // generate season options
+            const currentYear = new Date().getFullYear();
+            for(let i = 1979; i < currentYear; i++) {
+                let innerObj = {};
+                innerObj["displayValue"] = i + "-" + (i + 1);
+                innerObj["value"] = i;
+                this.seasonOptions.push(innerObj);
+            }  
         },
 
         methods: {
@@ -84,10 +104,11 @@
                 this.reload++;
             },
 
-            buildSeasonsArray() {
-                const checked = document.querySelectorAll('input[type="checkbox"]:checked');
-                this.selectedSeasons = Array.from(checked).map(x => x.value);
-            },
+            // Leaving here in case a potential solution for sorting API data becomes available in future
+            // buildSeasonsArray() {
+            //     const checked = document.querySelectorAll('input[type="checkbox"]:checked');
+            //     this.selectedSeasons = Array.from(checked).map(x => x.value);
+            // },
         }
     };
 </script>
@@ -124,7 +145,7 @@ fieldset.group legend {
 } 
 
 
-ul.checkbox  { 
+/* ul.checkbox  { 
   margin: 0; 
   padding: 0; 
   margin-left: 20px; 
@@ -139,6 +160,6 @@ ul.checkbox li {
   border: 1px transparent solid; 
   display:inline-block;
   width:12em;
-} 
+}  */
 
 </style>
