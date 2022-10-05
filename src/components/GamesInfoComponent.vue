@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div id="gameInfo" class="card mb-3" v-for="dataPoint in gameData" :key="dataPoint.id">
+        <div id="gameInfo" class="card mb-3" v-for="dataPoint in sortedGameData" :key="dataPoint.id">
             <div class="card-body">
                 <p>Date: {{ dateFormatter(dataPoint.date) }}</p>
                 <p>Matchup: {{ dataPoint.visitor_team.full_name }} at {{ dataPoint.home_team.full_name }}</p>
@@ -18,8 +18,16 @@ import axios from 'axios';
 
         data() {
             return {
-                gameData: {},
+                gameData: [],
             };
+        },
+
+        computed: {
+            // sort game data by date
+            sortedGameData() {
+                return this.gameData.slice()
+                    .sort((a, b) => new Date(a.date)- new Date(b.date));
+            }
         },
 
         props: {
