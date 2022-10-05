@@ -68,9 +68,9 @@
             return {
                 teams: [], // data returned from /teams API that populates Team selection menu
                 selectedTeam: "", // data to be passed to GamesInfoComponent prop "team_ids"
-                seasonOptions: [],
-                selectedSeason: "",
-                reload: 0,
+                seasonOptions: [], // generated year options
+                selectedSeason: "", // data to be passed to GamesInfoComponent prop "season"
+                reload: 0, // aids in reloading component when submit is clicked
             };
         },
 
@@ -90,6 +90,7 @@
                 })
 
             // generate season options
+            // API has data starting from 1979 season
             const currentYear = new Date().getFullYear();
             for(let i = 1979; i < currentYear; i++) {
                 let innerObj = {};
