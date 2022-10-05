@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" v-if="this.gameData.length > 0">
         <div id="gameInfo" class="card mb-3" v-for="dataPoint in sortedGameData" :key="dataPoint.id">
             <div class="card-body">
                 <p>Date: {{ dateFormatter(dataPoint.date) }}</p>
@@ -7,6 +7,9 @@
                 <p>Score: {{ dataPoint.visitor_team.abbreviation }} {{ dataPoint.visitor_team_score }} | {{ dataPoint.home_team.abbreviation }} {{ dataPoint.home_team_score }} ({{ dataPoint.status }})</p>
             </div>
         </div>
+    </div>
+    <div class="container" v-else>
+        <p>Select a team and season to see data.</p>
     </div>
 </template>
 
