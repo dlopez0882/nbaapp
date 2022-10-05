@@ -1,5 +1,9 @@
 <template>
     <div class="container">
+        <div v-if="displaySpinner" class="d-block text-center">
+            <strong>Loading...</strong>
+            <div class="spinner-grow ml-auto" role="status" aria-hidden="true"></div>
+        </div>
         <div id="gameInfo" class="card mb-3" v-for="dataPoint in sortedGameData" :key="dataPoint.id">
             <div class="card-body">
                 <p>Date: {{ dateFormatter(dataPoint.date) }}</p>
@@ -19,6 +23,7 @@ import axios from 'axios';
         data() {
             return {
                 gameData: [],
+                displaySpinner: false,
             };
         },
 
@@ -41,6 +46,8 @@ import axios from 'axios';
             // const seasonsParams = this.queryStringBuilder(this.season);
 
             if(this.team_ids !== "" && this.season !== "") {
+                this.displaySpinner = true;
+
                 const headers = {
                     "X-RapidAPI-Key": "959819e95cmshecf23a99cc98e23p15b9d9jsn5e3fd589ab8a",
                     "X-RapidAPI-Host": "free-nba.p.rapidapi.com",
@@ -52,6 +59,9 @@ import axios from 'axios';
                     })
                     .catch(error => {
                         console.log(error);
+                    })
+                    .finally(() => {
+                        this.displaySpinner = false;
                     })
             }
         },
