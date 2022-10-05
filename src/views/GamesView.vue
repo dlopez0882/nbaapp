@@ -39,7 +39,7 @@
         </fieldset>
     </div>
     
-    <GamesInfoComponent :key="reload" :team_ids="selectedTeam" :season="season"></GamesInfoComponent>
+    <GamesInfoComponent :key="reload" :team_ids="selectedTeam" :seasons="selectedSeasons"></GamesInfoComponent>
 </template>
 
 <script>
@@ -58,7 +58,7 @@
                 teams: [], // data returned from /teams API that populates Team selection menu
                 selectedTeam: "", // data to be passed to GamesInfoComponent prop "team_ids"
                 seasonOptions: ["2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022"],
-                season: [],
+                selectedSeasons: [],
                 reload: 0,
             };
         },
@@ -86,7 +86,7 @@
 
             buildSeasonsArray() {
                 const checked = document.querySelectorAll('input[type="checkbox"]:checked');
-                this.season = Array.from(checked).map(x => x.value);
+                this.selectedSeasons = Array.from(checked).map(x => x.value);
             },
         }
     };

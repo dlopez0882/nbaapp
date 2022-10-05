@@ -32,12 +32,12 @@ import axios from 'axios';
 
         props: {
             "team_ids": Number,
-            "season": Array,
+            "seasons": Array,
         },
 
         mounted() {
             // format seasons params
-            const seasonsParams = this.queryStringBuilder(this.season);
+            const seasonsParams = this.queryStringBuilder(this.seasons);
 
             const headers = {
                 "X-RapidAPI-Key": "959819e95cmshecf23a99cc98e23p15b9d9jsn5e3fd589ab8a",
