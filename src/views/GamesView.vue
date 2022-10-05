@@ -6,7 +6,8 @@
                     <div class="form-group col-md-4 mb-3">
                         <label for="teams">Team:</label>
                         <select name="teams" id="teams" class="form-control" aria-label="select team" v-model="selectedTeam">
-                            <option value="" selected>-- Select team --</option>
+                            <option v-if="displayLoadingOption" value="" selected>-- Loading... --</option>
+                            <option v-else value="" selected>-- Select team --</option>
                             <option v-for="team in teams" :key="team.id" :value="team.id">{{ team.full_name }}</option>
                         </select>
                     </div>
@@ -71,6 +72,7 @@
                 seasonOptions: [], // generated year options
                 selectedSeason: "", // data to be passed to GamesInfoComponent prop "season"
                 reload: 0, // aids in reloading component when submit is clicked
+                displayLoadingOption: true,
             };
         },
 
@@ -87,6 +89,9 @@
                 })
                 .catch(error => {
                     console.log(error);
+                })
+                .finally(() => {
+                    this.displayLoadingOption = false;
                 })
 
             // generate season options
