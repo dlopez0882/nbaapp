@@ -34,8 +34,8 @@ import axios from 'axios';
         },
 
         props: {
-            "team_ids": Number,
-            "season": Number,
+            "team_ids": [Number, String],
+            "season": [Number, String],
         },
 
         mounted() {
