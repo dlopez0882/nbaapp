@@ -86,6 +86,7 @@
                 .then(response => {
                     // console.log(response.data.data);
                     this.teams = response.data.data;
+                    this.reviseNames();
                 })
                 .catch(error => {
                     console.log(error);
@@ -108,6 +109,31 @@
         methods: {
             queryGames() {
                 this.reload++;
+            },
+
+            // display historical team names since API only returns current team names.
+            // ex. Seattle Supersonics --> Oklahoma City Thunder
+            reviseNames() {
+                const okcindex = this.teams.findIndex(team => team.abbreviation == "OKC");
+                this.teams[okcindex].full_name = "Oklahoma City Thunder (Seattle SuperSonics)";
+
+                const lacindex = this.teams.findIndex(team => team.abbreviation == "LAC");
+                this.teams[lacindex].full_name = "Los Angeles (San Diego) Clippers";
+
+                const sacindex = this.teams.findIndex(team => team.abbreviation == "SAC");
+                this.teams[sacindex].full_name = "Sacramento (Kansas City) Kings";
+
+                const memindex = this.teams.findIndex(team => team.abbreviation == "MEM");
+                this.teams[memindex].full_name = "Memphis (Vancouver) Grizzlies";
+
+                const bknindex = this.teams.findIndex(team => team.abbreviation == "BKN");
+                this.teams[bknindex].full_name = "Brooklyn (New Jersey) Nets";
+
+                const nopindex = this.teams.findIndex(team => team.abbreviation == "NOP");
+                this.teams[nopindex].full_name = "New Orleans Pelicans (Hornets)";
+
+                const chaindex = this.teams.findIndex(team => team.abbreviation == "CHA");
+                this.teams[chaindex].full_name = "Charlotte Hornets (Bobcats)";
             },
 
             // Leaving here in case a potential solution for sorting API data becomes available in future
