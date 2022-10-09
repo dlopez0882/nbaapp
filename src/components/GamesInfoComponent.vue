@@ -1,6 +1,11 @@
 <template>
     <div class="container">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <div v-if="displaySpinner" class="d-block text-center">
+            <strong>Loading...</strong>
+            <div class="spinner-grow ml-auto" role="status" aria-hidden="true"></div>
+        </div>
+        
+        <ul v-else class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="regular-season-tab" data-bs-toggle="tab" data-bs-target="#regular-season" type="button" role="tab" aria-controls="regular-season" aria-selected="true">Regular Season</button>
             </li>
@@ -8,14 +13,15 @@
                 <button class="nav-link" id="playoffs-tab" data-bs-toggle="tab" data-bs-target="#playoffs" type="button" role="tab" aria-controls="playoffs" aria-selected="false">Playoffs</button>
             </li>
         </ul>
+        
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="regular-season" role="tabpanel" aria-labelledby="regular-season-tab">
-                <div v-if="displaySpinner" class="d-block text-center">
+                <!-- <div v-if="displaySpinner" class="d-block text-center">
                     <strong>Loading...</strong>
                     <div class="spinner-grow ml-auto" role="status" aria-hidden="true"></div>
-                </div>
-                <div id="gameInfo" class="row row-cols-1 row-cols-md-3 g-4">
-                    <div class="col" v-for="dataPoint in sortedGameData" :key="dataPoint.id">
+                </div> -->
+                <div id="regularSeasonGameInfo" class="row row-cols-1 row-cols-md-3 g-4">
+                    <div class="col" v-for="dataPoint in sortedRegularSeasonGameData" :key="dataPoint.id">
                         <div class="card">
                             <div class="card-header">{{ dataPoint.visitor_team.full_name }} at {{ dataPoint.home_team.full_name }}</div>
                             <div class="card-body">
@@ -27,7 +33,21 @@
                 </div>
             </div>
 
-            <div class="tab-pane fade" id="playoffs" role="tabpanel" aria-labelledby="playoffs-tab">Playoffs score cards go here...</div>
+            <div class="tab-pane fade" id="playoffs" role="tabpanel" aria-labelledby="playoffs-tab">
+                <div id="postSeasonGameInfo" class="row row-cols-1 row-cols-md-3 g-4">
+                    <div class="col" v-for="dataPoint in sortedPostSeasonGameData" :key="dataPoint.id">
+                        <div class="card">
+                            <div class="card-header">{{ dataPoint.visitor_team.full_name }} at {{ dataPoint.home_team.full_name }}</div>
+                            <div class="card-body">
+                                <p>Date: {{ dateFormatter(dataPoint.date) }}</p>
+                                <p>Score: {{ dataPoint.visitor_team.abbreviation }} {{ dataPoint.visitor_team_score }} | {{ dataPoint.home_team.abbreviation }} {{ dataPoint.home_team_score }} ({{ dataPoint.status }})</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
         </div>
 
     <!-- <div class="container"> -->
@@ -58,16 +78,24 @@ import axios from 'axios';
         data() {
             return {
                 gameData: [],
+                regularSeasonData: [],
+                postSeasonData: [],
                 displaySpinner: false,
             };
         },
 
         computed: {
-            // sort game data by date
-            sortedGameData() {
-                return this.gameData.slice()
+            // sort regular season data by date
+            sortedRegularSeasonGameData() {
+                return this.regularSeasonData.slice()
                     .sort((a, b) => new Date(a.date)- new Date(b.date));
-            }
+            },
+
+            // sort postseason data by date
+            sortedPostSeasonGameData() {
+                return this.postSeasonData.slice()
+                    .sort((a, b) => new Date(a.date)- new Date(b.date));
+            },
         },
 
         props: {
@@ -92,6 +120,15 @@ import axios from 'axios';
                     .then(response => {
                         this.gameData = response.data.data;
                         this.transformName();
+
+                        // make regular season and post season arrays...
+                        this.gameData.forEach((item) => {
+                            if(item.postseason === false) {
+                                this.regularSeasonData.push(item);
+                            } else {
+                                this.postSeasonData.push(item);
+                            }
+                        })
                     })
                     .catch(error => {
                         console.log(error);
