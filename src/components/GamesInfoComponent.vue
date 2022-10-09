@@ -20,7 +20,7 @@
                     <strong>Loading...</strong>
                     <div class="spinner-grow ml-auto" role="status" aria-hidden="true"></div>
                 </div> -->
-                <div id="regularSeasonGameInfo" class="row row-cols-1 row-cols-md-3 g-4">
+                <div id="regularSeasonGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
                     <div class="col" v-for="dataPoint in sortedRegularSeasonGameData" :key="dataPoint.id">
                         <div class="card">
                             <div class="card-header">{{ dataPoint.visitor_team.full_name }} at {{ dataPoint.home_team.full_name }}</div>
@@ -34,7 +34,7 @@
             </div>
 
             <div class="tab-pane fade" id="playoffs" role="tabpanel" aria-labelledby="playoffs-tab">
-                <div id="postSeasonGameInfo" class="row row-cols-1 row-cols-md-3 g-4">
+                <div id="postSeasonGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
                     <div class="col" v-for="dataPoint in sortedPostSeasonGameData" :key="dataPoint.id">
                         <div class="card">
                             <div class="card-header">{{ dataPoint.visitor_team.full_name }} at {{ dataPoint.home_team.full_name }}</div>
