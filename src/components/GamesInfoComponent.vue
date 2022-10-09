@@ -16,7 +16,10 @@
         
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="regular-season" role="tabpanel" aria-labelledby="regular-season-tab">
-                <div id="regularSeasonGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
+                <div class="mt-1" v-if="sortedRegularSeasonGameData.length < 1 && displayTabs">
+                    <p>No regular season data available.</p>
+                </div>
+                <div v-else id="regularSeasonGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
                     <div class="col" v-for="dataPoint in sortedRegularSeasonGameData" :key="dataPoint.id">
                         <div class="card">
                             <div class="card-header">{{ dataPoint.visitor_team.full_name }} at {{ dataPoint.home_team.full_name }}</div>
@@ -30,7 +33,10 @@
             </div>
 
             <div class="tab-pane fade" id="playoffs" role="tabpanel" aria-labelledby="playoffs-tab">
-                <div id="postSeasonGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
+                <div class="mt-1" v-if="sortedPostSeasonGameData.length < 1 && displayTabs">
+                    <p>No playoffs data available.</p>
+                </div>
+                <div v-else id="postSeasonGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
                     <div class="col" v-for="dataPoint in sortedPostSeasonGameData" :key="dataPoint.id">
                         <div class="card">
                             <div class="card-header">{{ dataPoint.visitor_team.full_name }} at {{ dataPoint.home_team.full_name }}</div>
@@ -42,7 +48,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </div>
 </template>
