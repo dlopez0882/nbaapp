@@ -1,11 +1,11 @@
 <template>
     <div class="container">
-        <div v-if="displaySpinner" class="d-block text-center">
+        <div v-if="displaySpinner && !displayTabs" class="d-block text-center">
             <strong>Loading...</strong>
             <div class="spinner-grow ml-auto" role="status" aria-hidden="true"></div>
         </div>
-        
-        <ul v-else class="nav nav-tabs" id="myTab" role="tablist">
+
+        <ul v-else-if="!displaySpinner && displayTabs" class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="regular-season-tab" data-bs-toggle="tab" data-bs-target="#regular-season" type="button" role="tab" aria-controls="regular-season" aria-selected="true">Regular Season</button>
             </li>
@@ -81,6 +81,7 @@ import axios from 'axios';
                 regularSeasonData: [],
                 postSeasonData: [],
                 displaySpinner: false,
+                displayTabs: false,
             };
         },
 
@@ -135,6 +136,7 @@ import axios from 'axios';
                     })
                     .finally(() => {
                         this.displaySpinner = false;
+                        this.displayTabs = true;
                     })
             }
         },
