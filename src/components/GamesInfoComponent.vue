@@ -26,7 +26,7 @@
                             <div class="card-body">
                                 <p>Date: {{ dateFormatter(dataPoint.date) }}</p>
                                 <p>Score: {{ dataPoint.visitor_team.abbreviation }} {{ dataPoint.visitor_team_score }} | {{ dataPoint.home_team.abbreviation }} {{ dataPoint.home_team_score }} ({{ dataPoint.status }})</p>
-                                <p><a href="javascript:void(0)" @click="showStatsModal()" @keydown.esc="hideStatsModal()">View game stats</a></p>
+                                <p><a href="javascript:void(0)" @click="showStatsModal(dataPoint.id)" @keydown.esc="hideStatsModal()">View game stats</a></p>
                             </div>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                             <div class="card-body">
                                 <p>Date: {{ dateFormatter(dataPoint.date) }}</p>
                                 <p>Score: {{ dataPoint.visitor_team.abbreviation }} {{ dataPoint.visitor_team_score }} | {{ dataPoint.home_team.abbreviation }} {{ dataPoint.home_team_score }} ({{ dataPoint.status }})</p>
-                                <p><a href="javascript:void(0)" @click="showStatsModal()" @keydown.esc="hideStatsModal()">View game stats</a></p>
+                                <p><a href="javascript:void(0)" @click="showStatsModal(dataPoint.id)" @keydown.esc="hideStatsModal()">View game stats</a></p>
                             </div>
                         </div>
                     </div>
@@ -53,7 +53,9 @@
         </div>
 
         <transition name="modal">
-            <GameStatsComponent v-if="displayStatsModal" @close="hideStatsModal()"></GameStatsComponent>
+            <GameStatsComponent v-if="displayStatsModal" @close="hideStatsModal()"
+                :gameid = "gameid">
+            </GameStatsComponent>
         </transition>
     </div>
 </template>
@@ -77,6 +79,7 @@ import GameStatsComponent from './GameStatsComponent.vue';
                 displaySpinner: false,
                 displayTabs: false,
                 displayStatsModal: false,
+                gameid: "",
             };
         },
 
@@ -222,12 +225,14 @@ import GameStatsComponent from './GameStatsComponent.vue';
                 }
             },
 
-            showStatsModal() {
+            showStatsModal(id) {
                 this.displayStatsModal = true;
+                this.gameid = id;
             },
 
             hideStatsModal() {
                 this.displayStatsModal = false;
+                this.gameid = "";
             },
 
             // Leaving here in case a potential solution for sorting API data becomes available in future

@@ -17,6 +17,10 @@
 <script>
     export default {
         name: "GameStatsComponent",
+
+        props: {
+            gameid: Number,
+        }
     }
 </script>
 
