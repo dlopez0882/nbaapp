@@ -26,6 +26,7 @@
                             <div class="card-body">
                                 <p>Date: {{ dateFormatter(dataPoint.date) }}</p>
                                 <p>Score: {{ dataPoint.visitor_team.abbreviation }} {{ dataPoint.visitor_team_score }} | {{ dataPoint.home_team.abbreviation }} {{ dataPoint.home_team_score }} ({{ dataPoint.status }})</p>
+                                <p><a href="javascript:void(0)" @click="showStatsModal()" @keydown.esc="hideStatsModal()">View game stats</a></p>
                             </div>
                         </div>
                     </div>
@@ -43,21 +44,30 @@
                             <div class="card-body">
                                 <p>Date: {{ dateFormatter(dataPoint.date) }}</p>
                                 <p>Score: {{ dataPoint.visitor_team.abbreviation }} {{ dataPoint.visitor_team_score }} | {{ dataPoint.home_team.abbreviation }} {{ dataPoint.home_team_score }} ({{ dataPoint.status }})</p>
+                                <p><a href="javascript:void(0)" @click="showStatsModal()" @keydown.esc="hideStatsModal()">View game stats</a></p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
+
+        <transition name="modal">
+            <GameStatsComponent v-if="displayStatsModal" @close="hideStatsModal()"></GameStatsComponent>
+        </transition>
     </div>
 </template>
 
 <script>
 import axios from 'axios';
+import GameStatsComponent from './GameStatsComponent.vue';
 
     export default {
         name: "GamesInfoComponent",
+
+        components: {
+            GameStatsComponent
+        },
 
         data() {
             return {
@@ -66,6 +76,7 @@ import axios from 'axios';
                 postSeasonData: [],
                 displaySpinner: false,
                 displayTabs: false,
+                displayStatsModal: false,
             };
         },
 
@@ -209,7 +220,15 @@ import axios from 'axios';
                         item.visitor_team.full_name = (item.visitor_team.abbreviation == "CHA") ? "Charlotte Bobcats" : item.visitor_team.full_name;
                     })
                 }
-            }
+            },
+
+            showStatsModal() {
+                this.displayStatsModal = true;
+            },
+
+            hideStatsModal() {
+                this.displayStatsModal = false;
+            },
 
             // Leaving here in case a potential solution for sorting API data becomes available in future
             // format params that need to be passed as an array into API 
