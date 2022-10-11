@@ -127,8 +127,7 @@ import axios from 'axios';
 
         methods: {
             dateFormatter(timestamp) {
-                let d = new Date(timestamp);
-                return d.toDateString();
+                return timestamp.slice(0, -14);
             },
 
             transformName() {
