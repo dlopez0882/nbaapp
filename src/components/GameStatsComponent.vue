@@ -2,7 +2,58 @@
     <div class="modal-mask">
         <div class="modal-wrapper">
             <div class="modal-container">
-                <span>Stats to display here...</span>
+                <table class="table table-sm table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th class="table-text">Player</th>
+                            <th class="table-text">Team</th>
+                            <th class="table-text">Ast</th>
+                            <th class="table-text">Blk</th>
+                            <th class="table-text">Dreb</th>
+                            <th class="table-text">FG3%</th>
+                            <th class="table-text">FG3A</th>
+                            <th class="table-text">FG3M</th>
+                            <th class="table-text">FG%</th>
+                            <th class="table-text">FGA</th>
+                            <th class="table-text">FGM</th>
+                            <th class="table-text">FT%</th>
+                            <th class="table-text">FTA%</th>
+                            <th class="table-text">FTM%</th>
+                            <th class="table-text">Mins</th>
+                            <th class="table-text">OReb</th>
+                            <th class="table-text">Pf</th>
+                            <th class="table-text">PTS</th>
+                            <th class="table-text">Reb</th>
+                            <th class="table-text">Stl</th>
+                            <th class="table-text">Turnover</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="stat in stats" :key="stat.id">
+                            <td class="table-text">{{ stat.player.first_name }} {{ stat.player.last_name }}</td>
+                            <td class="table-text">{{ stat.team.abbreviation }}</td>
+                            <td class="table-text">{{ stat.ast }}</td>
+                            <td class="table-text">{{ stat.blk }}</td>
+                            <td class="table-text">{{ stat.dreb }}</td>
+                            <td class="table-text">{{ stat.fg3_pct }}</td>
+                            <td class="table-text">{{ stat.fg3a }}</td>
+                            <td class="table-text">{{ stat.fg3m }}</td>
+                            <td class="table-text">{{ stat.fg_pct }}</td>
+                            <td class="table-text">{{ stat.fga }}</td>
+                            <td class="table-text">{{ stat.fgm }}</td>
+                            <td class="table-text">{{ stat.ft_pct }}</td>
+                            <td class="table-text">{{ stat.fta }}</td>
+                            <td class="table-text">{{ stat.ftm }}</td>
+                            <td class="table-text">{{ stat.min }}</td>
+                            <td class="table-text">{{ stat.oreb }}</td>
+                            <td class="table-text">{{ stat.pf }}</td>
+                            <td class="table-text">{{ stat.pts }}</td>
+                            <td class="table-text">{{ stat.reb }}</td>
+                            <td class="table-text">{{ stat.stl }}</td>
+                            <td class="table-text">{{ stat.turnover }}</td>
+                        </tr>
+                    </tbody>
+                </table>
                 <div class="text-end">
                     <button type="button" class="btn btn-light me-2" @click="$emit('close')">
                         Close
@@ -17,8 +68,8 @@
 <script>
 import axios from 'axios';
 
-    export default {
-        name: "GameStatsComponent",
+export default {
+    name: "GameStatsComponent",
 
     data() {
         return {
@@ -26,8 +77,8 @@ import axios from 'axios';
         }
     },
 
-        props: {
-            gameid: Number,
+    props: {
+        gameid: Number,
     },
 
     mounted() {
@@ -48,7 +99,7 @@ import axios from 'axios';
                 this.displayTabs = true;
             })
     },
-    }
+}
 </script>
 
 <style scoped>
@@ -79,6 +130,7 @@ import axios from 'axios';
     /* font-family: Helvetica, Arial, sans-serif; */
     overflow-y: auto;
     max-height: 700px;
+    width: 90%;
 }
 
 .modal-container-confirm {
