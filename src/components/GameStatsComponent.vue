@@ -67,6 +67,7 @@
 
 <script>
 import axios from 'axios';
+import { transformNames } from '../modules/transformNames';
 
 export default {
     name: "GameStatsComponent",
@@ -79,6 +80,7 @@ export default {
 
     props: {
         gameid: Number,
+        season: Number,
     },
 
     mounted() {
@@ -90,6 +92,9 @@ export default {
         axios.get("https://free-nba.p.rapidapi.com/stats?game_ids[]=" + this.gameid,{ headers })
             .then(response => {
                 this.stats = response.data.data;
+                this.stats.forEach((item) => {
+                    item.team.abbreviation = transformNames(this.season, item.team.abbreviation);
+                })
             })
             .catch(error => {
                 console.log(error);

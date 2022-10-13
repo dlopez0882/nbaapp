@@ -54,7 +54,8 @@
 
         <transition name="modal">
             <GameStatsComponent v-if="displayStatsModal" @close="hideStatsModal()"
-                :gameid = "gameid">
+                :gameid = "gameid"
+                :season = "this.season">
             </GameStatsComponent>
         </transition>
     </div>
