@@ -64,7 +64,7 @@
 <script>
 import axios from 'axios';
 import GameStatsComponent from './GameStatsComponent.vue';
-import { nameRetroizer, abbreviationRetroizer } from '../modules/transformNames';
+import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
 
     export default {
         name: "GamesInfoComponent",

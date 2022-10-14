@@ -1,3 +1,4 @@
+// a utility to retro team names
 export const nameRetroizer = function(season, team) {
     // Seattle SuperSonics
     if(team == "Oklahoma City Thunder") {

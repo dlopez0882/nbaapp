@@ -67,7 +67,7 @@
 
 <script>
 import axios from 'axios';
-import { abbreviationRetroizer } from '../modules/transformNames';
+import { abbreviationRetroizer } from '../modules/retroizer';
 
 export default {
     name: "GameStatsComponent",
