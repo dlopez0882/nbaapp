@@ -67,7 +67,7 @@
 
 <script>
 import axios from 'axios';
-import { transformNames } from '../modules/transformNames';
+import { abbreviationRetroizer } from '../modules/transformNames';
 
 export default {
     name: "GameStatsComponent",
@@ -93,7 +93,7 @@ export default {
             .then(response => {
                 this.stats = response.data.data;
                 this.stats.forEach((item) => {
-                    item.team.abbreviation = transformNames(this.season, item.team.abbreviation);
+                    item.team.abbreviation = abbreviationRetroizer(this.season, item.team.abbreviation);
                 })
             })
             .catch(error => {
