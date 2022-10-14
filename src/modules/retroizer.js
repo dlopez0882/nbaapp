@@ -2,27 +2,27 @@
 export const nameRetroizer = function(season, team) {
     // Seattle SuperSonics
     if(team == "Oklahoma City Thunder") {
-        return (season < 2008) ? "Seattle SuperSonics" : "Oklahoma City Thunder";
+        return (season < 2008) ? "Seattle SuperSonics" : team;
     }
 
     // San Diego Clippers
     if(team == "LA Clippers") {
-        return (season < 1984) ? "San Diego Clippers" : "LA Clippers";
+        return (season < 1984) ? "San Diego Clippers" : team;
     }
 
     // Kansas City Kings
     if(team == "Sacramento Kings") {
-        return (season < 1985) ? "Kansas City Kings" : "Sacramento Kings";
+        return (season < 1985) ? "Kansas City Kings" : team;
     }
 
     // Vancouver Grizzlies
     if(team == "Memphis Grizzlies") {
-        return (season < 2001) ? "Vancouver Grizzlies" : "Memphis Grizzlies";
+        return (season < 2001) ? "Vancouver Grizzlies" : team;
     }
 
     // New Jersey Nets
     if(team == "Brooklyn Nets") {
-        return (season < 2012) ? "New Jersey Nets" : "Brooklyn Nets";
+        return (season < 2012) ? "New Jersey Nets" : team;
     }
 
     // New Orleans/Oklahoma City Hornets
@@ -35,7 +35,7 @@ export const nameRetroizer = function(season, team) {
 
     // Charlotte Bobcats
     if(team == "Charlotte Hornets") {
-        return (season > 2004 && season < 2014) ? "Charlotte Bobcats" : "Charlotte Hornets";
+        return (season > 2004 && season < 2014) ? "Charlotte Bobcats" : team;
     }
 
     // return incoming team if it doesn't fall into any of the conditions above...
@@ -74,7 +74,7 @@ export const abbreviationRetroizer = function(season, team)  {
     if(team == "NOP" && (season === 2005 || season === 2006)) {
         return "NOK";
     // New Orleans Hornets
-    } else if(team == "NOP" && season < 2013) {
+    } else if (team == "NOP" && season < 2013) {
         return "NOH";
     }
 
