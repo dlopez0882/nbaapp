@@ -6,8 +6,8 @@ export const nameRetroizer = function(season, team) {
     }
 
     // San Diego Clippers
-    if(team == "Los Angeles Clippers") {
-        return (season < 1984) ? "San Diego Clippers" : "Los Angeles Clippers";
+    if(team == "LA Clippers") {
+        return (season < 1984) ? "San Diego Clippers" : "LA Clippers";
     }
 
     // Kansas City Kings
