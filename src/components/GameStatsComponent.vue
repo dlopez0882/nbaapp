@@ -5,27 +5,27 @@
                 <table class="table table-sm table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th class="table-text">Player</th>
-                            <th class="table-text">Team</th>
-                            <th class="table-text">Ast</th>
-                            <th class="table-text">Blk</th>
-                            <th class="table-text">Dreb</th>
-                            <th class="table-text">FG3%</th>
-                            <th class="table-text">FG3A</th>
-                            <th class="table-text">FG3M</th>
-                            <th class="table-text">FG%</th>
-                            <th class="table-text">FGA</th>
-                            <th class="table-text">FGM</th>
-                            <th class="table-text">FT%</th>
-                            <th class="table-text">FTA%</th>
-                            <th class="table-text">FTM%</th>
-                            <th class="table-text">Mins</th>
-                            <th class="table-text">OReb</th>
-                            <th class="table-text">Pf</th>
-                            <th class="table-text">PTS</th>
-                            <th class="table-text">Reb</th>
-                            <th class="table-text">Stl</th>
-                            <th class="table-text">Turnover</th>
+                            <th class="table-text" title="Player">Player</th>
+                            <th class="table-text" title="Team">Team</th>
+                            <th class="table-text" title="Assists">Ast</th>
+                            <th class="table-text" title="Blocks">Blk</th>
+                            <th class="table-text" title="Defensive rebounds">Dreb</th>
+                            <th class="table-text" title="3pt field goal percentage">FG3%</th>
+                            <th class="table-text" title="3pt field goal attempts">FG3A</th>
+                            <th class="table-text" title="3pt field goals made">FG3M</th>
+                            <th class="table-text" title="Field goal %">FG%</th>
+                            <th class="table-text" title="Field goal attempts">FGA</th>
+                            <th class="table-text" title="Field goals made">FGM</th>
+                            <th class="table-text" title="Free throw %">FT%</th>
+                            <th class="table-text" title="Free throw attempts">FTA</th>
+                            <th class="table-text" title="Free throws made">FTM</th>
+                            <th class="table-text" title="Minutes">Mins</th>
+                            <th class="table-text" title="Offensive rebounds">OReb</th>
+                            <th class="table-text" title="Personal fouls">Pf</th>
+                            <th class="table-text" title="Points">Pts</th>
+                            <th class="table-text" title="Rebounds">Reb</th>
+                            <th class="table-text" title="Steals">Stl</th>
+                            <th class="table-text" title="Turnovers">Turnovers</th>
                         </tr>
                     </thead>
                     <tbody>
