@@ -30,10 +30,10 @@ export default {
 
 <style scoped>
 .table-scrollable {
-  overflow-x: auto;
-  max-width: 300px;
-  box-shadow: inset 0 0 5px rgba(150, 150 ,150,0.35);
-  margin: auto;
+    overflow-x: auto;
+    max-width: 300px;
+    box-shadow: inset 0 0 5px rgba(150, 150 ,150,0.35);
+    margin: auto;
 }
 
 @media (min-width: 576px) { 
