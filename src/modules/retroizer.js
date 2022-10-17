@@ -19,6 +19,8 @@ export const nameRetroizer = function(season, team) {
             } else if (season < 2013) {
                 return "New Orleans Hornets"
             }
+        case "Washington Wizards": 
+            return (season < 1997) ? "Washington Bullets" : team;
         default:
             return team;
     }

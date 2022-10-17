@@ -134,6 +134,9 @@
 
                 const chaindex = this.teams.findIndex(team => team.abbreviation == "CHA");
                 this.teams[chaindex].full_name = "Charlotte Hornets (Bobcats)";
+
+                const wasindex = this.teams.findIndex(team => team.abbreviation == "WAS");
+                this.teams[wasindex].full_name = "Washington Wizards (Bullets)";
             },
 
             // Leaving here in case a potential solution for sorting API data becomes available in future
