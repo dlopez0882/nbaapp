@@ -2,7 +2,58 @@
     <div class="modal-mask">
         <div class="modal-wrapper">
             <div class="modal-container">
-                <table class="table table-sm table-bordered table-striped">
+                <TableComponent
+                    :header="[
+                        { 'heading': 'Player', 'title': 'Player' },
+                        { 'heading': 'Team', 'title': 'Team' },
+                        { 'heading': 'Ast', 'title': 'Assists' },
+                        { 'heading': 'Blk', 'title': 'Blocks' },
+                        { 'heading': 'Dreb', 'title': 'Defensive rebounds' },
+                        { 'heading': 'FG3%', 'title': '3pt field goal percentage' },
+                        { 'heading': 'FG3A', 'title': '3pt field goal attempts' },
+                        { 'heading': 'FG3M', 'title': '3pt field goals made' },
+                        { 'heading': 'FG%', 'title': 'Field goal %' },
+                        { 'heading': 'FGA', 'title': 'Field goal attempts' },
+                        { 'heading': 'FGM', 'title': 'Field goals made' },
+                        { 'heading': 'FT%', 'title': 'Free throw %' },
+                        { 'heading': 'FTA', 'title': 'Free throw attempts' },
+                        { 'heading': 'FTM', 'title': 'Free throws made' },
+                        { 'heading': 'Mins', 'title': 'Minutes' },
+                        { 'heading': 'OReb', 'title': 'Offensive rebounds' },
+                        { 'heading': 'Pf', 'title': 'Personal fouls' },
+                        { 'heading': 'Pts', 'title': 'Points' },
+                        { 'heading': 'Reb', 'title': 'Rebounds' },
+                        { 'heading': 'Stl', 'title': 'Steals' },
+                        { 'heading': 'Turnovers', 'title': 'Turnovers' },
+                    ]"
+                    :body="stats"
+                    
+                    :bodyFields="[
+                        'playerName',
+                        'teamAbbreviation',
+                        'ast', 
+                        'blk', 
+                        'dreb', 
+                        'fg3_pct', 
+                        'fg3a', 
+                        'fg3m', 
+                        'fg_pct', 
+                        'fg3_pct', 
+                        'fga', 
+                        'fgm', 
+                        'ft_pct', 
+                        'fta', 
+                        'ftm', 
+                        'min', 
+                        'pf', 
+                        'pts', 
+                        'reb', 
+                        'stl', 
+                        'turnover', 
+                    ]">
+                </TableComponent>
+
+                <!-- <table class="table table-sm table-bordered table-striped">
                     <thead>
                         <tr>
                             <th class="table-text" title="Player">Player</th>
@@ -53,7 +104,7 @@
                             <td class="table-text">{{ stat.turnover }}</td>
                         </tr>
                     </tbody>
-                </table>
+                </table> -->
                 <div class="text-end">
                     <button type="button" class="btn btn-light me-2" @click="$emit('close')">
                         Close
@@ -68,9 +119,14 @@
 <script>
 import axios from 'axios';
 import { abbreviationRetroizer } from '../modules/retroizer';
+import TableComponent from './TableComponent.vue';
 
 export default {
     name: "GameStatsComponent",
+
+    components: {
+        TableComponent,
+    },
 
     data() {
         return {
@@ -94,6 +150,10 @@ export default {
                 this.stats = response.data.data;
                 this.stats.forEach((item) => {
                     item.team.abbreviation = abbreviationRetroizer(this.season, item.team.abbreviation);
+                    item.teamAbbreviation = item.team.abbreviation;
+                    item.playerName = item.player.first_name + " " + item.player.last_name;
+                    // convert "team" object to an array
+                    // item.team = Object.keys(item.team).map((key) => [(key), item.team[key]]);
                 })
             })
             .catch(error => {
