@@ -4,7 +4,7 @@
         <div class="row justify-content-between mb-3">
             <div class="col-md-4 text-start">
                 <span>Show: </span>
-                <select name="per-page-option" id="perpageoption" @change="onChange($event)"
+                <select name="per-page-option" id="perpageoption" @change="togglePerPageOption($event)"
                     v-model="per_page">
                     <option value="25">25</option>
                     <option value="50">50</option>
@@ -49,7 +49,7 @@
         <div class="row justify-content-between mb-3">
             <div class="col-md-4 text-start">
                 <span>Page: </span>
-                <select name="page" id="page" @change="queryByPage($event)">
+                <select name="page" id="page" @change="togglePageOption($event)">
                     <option v-for="page in pages" :value="page">{{ page }}</option>
                 </select>
             </div>
@@ -104,7 +104,7 @@ export default {
                 });
         },
 
-        onChange(event) {
+        togglePerPageOption(event) {
             this.per_page = event.target.value;
             this.retrievePlayers();
         },
@@ -119,7 +119,7 @@ export default {
             }
         },
 
-        queryByPage(event) {
+        togglePageOption(event) {
             this.page = event.target.value;
             this.retrievePlayers();
         },
