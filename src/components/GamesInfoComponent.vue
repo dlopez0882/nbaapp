@@ -26,7 +26,7 @@
                             <div class="card-body">
                                 <p>Date: {{ dateFormatter(dataPoint.date) }}</p>
                                 <p>Score: {{ dataPoint.visitor_team.abbreviation }} {{ dataPoint.visitor_team_score }} | {{ dataPoint.home_team.abbreviation }} {{ dataPoint.home_team_score }} ({{ dataPoint.status }})</p>
-                                <p><a href="javascript:void(0)" @click="showStatsModal(dataPoint.id)" @keydown.esc="hideStatsModal()">View game stats</a></p>
+                                <p><a href="javascript:void(0)" @click="showStatsModal(dataPoint.id, dataPoint.visitor_team.abbreviation, dataPoint.home_team.abbreviation, dateFormatter(dataPoint.date))" @keydown.esc="hideStatsModal()">View game stats</a></p>
                             </div>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                             <div class="card-body">
                                 <p>Date: {{ dateFormatter(dataPoint.date) }}</p>
                                 <p>Score: {{ dataPoint.visitor_team.abbreviation }} {{ dataPoint.visitor_team_score }} | {{ dataPoint.home_team.abbreviation }} {{ dataPoint.home_team_score }} ({{ dataPoint.status }})</p>
-                                <p><a href="javascript:void(0)" @click="showStatsModal(dataPoint.id)" @keydown.esc="hideStatsModal()">View game stats</a></p>
+                                <p><a href="javascript:void(0)" @click="showStatsModal(dataPoint.id, dataPoint.visitor_team.abbreviation, dataPoint.home_team.abbreviation, dateFormatter(dataPoint.date))" @keydown.esc="hideStatsModal()">View game stats</a></p>
                             </div>
                         </div>
                     </div>
@@ -55,7 +55,8 @@
         <transition name="modal">
             <GameStatsComponent v-if="displayStatsModal" @close="hideStatsModal()"
                 :gameid = "gameid"
-                :season = "this.season">
+                :season = "this.season"
+                :statCardTitle = "statCardTitle">
             </GameStatsComponent>
         </transition>
     </div>
@@ -82,6 +83,7 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
                 displayTabs: false,
                 displayStatsModal: false,
                 gameid: "",
+                statCardTitle: "",
             };
         },
 
@@ -153,14 +155,16 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
                 return timestamp.slice(0, -14);
             },
 
-            showStatsModal(id) {
+            showStatsModal(id, visitorteam, hometeam, date) {
                 this.displayStatsModal = true;
                 this.gameid = id;
+                this.statCardTitle = "Stat Card - " + visitorteam + " vs. " + hometeam + " (" + date + ") "
             },
 
             hideStatsModal() {
                 this.displayStatsModal = false;
                 this.gameid = "";
+                this.statCardTitle = "";
             },
 
             // Leaving here in case a potential solution for sorting API data becomes available in future

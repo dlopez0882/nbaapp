@@ -2,6 +2,7 @@
     <div class="modal-mask">
         <div class="modal-wrapper">
             <div class="modal-container">
+                <h3>{{ statCardTitle }}</h3>
                 <TableComponent
                     :header="[
                         { 'heading': 'Player', 'title': 'Player' },
@@ -84,6 +85,7 @@ export default {
     props: {
         gameid: Number,
         season: Number,
+        statCardTitle: String,
     },
 
     mounted() {
