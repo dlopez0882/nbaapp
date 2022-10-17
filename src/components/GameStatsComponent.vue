@@ -2,58 +2,62 @@
     <div class="modal-mask">
         <div class="modal-wrapper">
             <div class="modal-container">
-                <h3>{{ statCardTitle }}</h3>
-                <TableComponent
-                    :header="[
-                        { 'heading': 'Player', 'title': 'Player' },
-                        { 'heading': 'Team', 'title': 'Team' },
-                        { 'heading': 'Ast', 'title': 'Assists' },
-                        { 'heading': 'Blk', 'title': 'Blocks' },
-                        { 'heading': 'Dreb', 'title': 'Defensive rebounds' },
-                        { 'heading': 'FG3%', 'title': '3pt field goal percentage' },
-                        { 'heading': 'FG3A', 'title': '3pt field goal attempts' },
-                        { 'heading': 'FG3M', 'title': '3pt field goals made' },
-                        { 'heading': 'FG%', 'title': 'Field goal %' },
-                        { 'heading': 'FGA', 'title': 'Field goal attempts' },
-                        { 'heading': 'FGM', 'title': 'Field goals made' },
-                        { 'heading': 'FT%', 'title': 'Free throw %' },
-                        { 'heading': 'FTA', 'title': 'Free throw attempts' },
-                        { 'heading': 'FTM', 'title': 'Free throws made' },
-                        { 'heading': 'Mins', 'title': 'Minutes' },
-                        { 'heading': 'OReb', 'title': 'Offensive rebounds' },
-                        { 'heading': 'Pf', 'title': 'Personal fouls' },
-                        { 'heading': 'Pts', 'title': 'Points' },
-                        { 'heading': 'Reb', 'title': 'Rebounds' },
-                        { 'heading': 'Stl', 'title': 'Steals' },
-                        { 'heading': 'Turnovers', 'title': 'Turnovers' },
-                    ]"
-                    :body="stats"
-                    :bodyFields="[
-                        'playerName',
-                        'teamAbbreviation',
-                        'ast', 
-                        'blk', 
-                        'dreb', 
-                        'fg3_pct', 
-                        'fg3a', 
-                        'fg3m', 
-                        'fg_pct', 
-                        'fg3_pct', 
-                        'fga', 
-                        'fgm', 
-                        'ft_pct', 
-                        'fta', 
-                        'ftm', 
-                        'min', 
-                        'pf', 
-                        'pts', 
-                        'reb', 
-                        'stl', 
-                        'turnover', 
-                    ]">
-                </TableComponent>
-
-                <div class="text-end">
+                <div class="modal-header">
+                    <h4>{{ statCardTitle }}</h4>
+                    <button type="button" class="btn-close" aria-label="Close" @click="$emit('close')"></button>
+                </div>
+                <div class="modal-body">
+                    <TableComponent
+                        :header="[
+                            { 'heading': 'Player', 'title': 'Player' },
+                            { 'heading': 'Team', 'title': 'Team' },
+                            { 'heading': 'Ast', 'title': 'Assists' },
+                            { 'heading': 'Blk', 'title': 'Blocks' },
+                            { 'heading': 'Dreb', 'title': 'Defensive rebounds' },
+                            { 'heading': 'FG3%', 'title': '3pt field goal percentage' },
+                            { 'heading': 'FG3A', 'title': '3pt field goal attempts' },
+                            { 'heading': 'FG3M', 'title': '3pt field goals made' },
+                            { 'heading': 'FG%', 'title': 'Field goal %' },
+                            { 'heading': 'FGA', 'title': 'Field goal attempts' },
+                            { 'heading': 'FGM', 'title': 'Field goals made' },
+                            { 'heading': 'FT%', 'title': 'Free throw %' },
+                            { 'heading': 'FTA', 'title': 'Free throw attempts' },
+                            { 'heading': 'FTM', 'title': 'Free throws made' },
+                            { 'heading': 'Mins', 'title': 'Minutes' },
+                            { 'heading': 'OReb', 'title': 'Offensive rebounds' },
+                            { 'heading': 'Pf', 'title': 'Personal fouls' },
+                            { 'heading': 'Pts', 'title': 'Points' },
+                            { 'heading': 'Reb', 'title': 'Rebounds' },
+                            { 'heading': 'Stl', 'title': 'Steals' },
+                            { 'heading': 'Turnovers', 'title': 'Turnovers' },
+                        ]"
+                        :body="stats"
+                        :bodyFields="[
+                            'playerName',
+                            'teamAbbreviation',
+                            'ast', 
+                            'blk', 
+                            'dreb', 
+                            'fg3_pct', 
+                            'fg3a', 
+                            'fg3m', 
+                            'fg_pct', 
+                            'fg3_pct', 
+                            'fga', 
+                            'fgm', 
+                            'ft_pct', 
+                            'fta', 
+                            'ftm', 
+                            'min', 
+                            'pf', 
+                            'pts', 
+                            'reb', 
+                            'stl', 
+                            'turnover', 
+                        ]">
+                    </TableComponent>
+                </div>
+                <div class="modal-footer">
                     <button type="button" class="btn btn-light me-2" @click="$emit('close')">
                         Close
                     </button>
