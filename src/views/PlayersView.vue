@@ -29,8 +29,22 @@
         </div>
     </div>
 
-    <!-- @pageCount is emitted from child component -->
-    <PlayersListComponent @pageCount="setPageCount" :key="reload" :page="page" :per_page="per_page" :search="search"></PlayersListComponent>
+    <TableComponent
+        :header="[
+            { 'heading': 'First Name', 'title': 'First Name' },
+            { 'heading': 'Last Name', 'title': 'Last Name' },
+            { 'heading': 'Position', 'title': 'Position' },
+            { 'heading': 'Team', 'title': 'Team' },
+        ]"
+        :body="players"
+        :bodyFields="[
+            'first_name',
+            'last_name',
+            'position',
+            'teamName'
+        ]"
+    ></TableComponent>
+
     <div class="container">
         <div class="row justify-content-between mb-3">
             <div class="col-md-4 text-start">
@@ -44,14 +58,15 @@
 </template>
 
 <script>
-import PlayersListComponent from "@/components/PlayersListComponent.vue";
+import axios from "axios";
 import LogoComponent from "@/components/LogoComponent.vue";
+import TableComponent from "@/components/TableComponent.vue";
 
 export default {
     name: "PlayersView",
     components: { 
-        PlayersListComponent, 
-        LogoComponent 
+        LogoComponent,
+        TableComponent,
     },
 
     data() {
@@ -61,14 +76,37 @@ export default {
             per_page: "25",
             search: "",
             old_search: "",
-            reload: 0,
+            players: [],
         };
     },
 
+    mounted() {
+        this.retrievePlayers();
+    },
+
     methods: {
+        retrievePlayers() {
+            const headers = {
+                "X-RapidAPI-Key": "959819e95cmshecf23a99cc98e23p15b9d9jsn5e3fd589ab8a",
+                "X-RapidAPI-Host": "free-nba.p.rapidapi.com",
+            };
+
+            axios.get("https://free-nba.p.rapidapi.com/players?" + "page=" + this.page + "&per_page=" + this.per_page + "&search=" + this.search,
+                    { headers }
+                ).then((response) => {
+                    this.players = response.data.data;
+                    this.players.forEach((item) => {
+                        item.teamName = item.team.full_name;
+                    });
+                    this.pages = response.data.meta.total_pages;
+                }).catch((error) => {
+                    console.log(error);
+                });
+        },
+
         onChange(event) {
             this.per_page = event.target.value;
-            this.reload++;
+            this.retrievePlayers();
         },
 
         queryByName(event) {
@@ -76,26 +114,16 @@ export default {
 
             // force re-load if search string differs
             if(this.old_search !== this.search){ 
-                this.reload++;
+                this.retrievePlayers();
                 this.old_search = this.search;
             }
         },
 
         queryByPage(event) {
             this.page = event.target.value;
-            this.reload++;
+            this.retrievePlayers();
         },
 
-        // set the number of pages based on emitted data from child component
-        setPageCount(page_count) {
-            this.pages = page_count;
-        }
     },
 };
 </script>
-
-<style scoped>
-/* label {
-    text-align:left;
-} */
-</style>
