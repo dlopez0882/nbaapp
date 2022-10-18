@@ -1,6 +1,5 @@
 <template>
     <div class="container">
-        <LogoComponent></LogoComponent>
         <div class="row justify-content-between mb-3">
             <div class="col-md-4 text-start">
                 <span>Show: </span>
@@ -59,13 +58,11 @@
 
 <script>
 import axios from "axios";
-import LogoComponent from "@/components/LogoComponent.vue";
 import TableComponent from "@/components/TableComponent.vue";
 
 export default {
     name: "PlayersView",
     components: { 
-        LogoComponent,
         TableComponent,
     },
 
