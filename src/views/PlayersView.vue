@@ -105,6 +105,11 @@ export default {
         },
 
         togglePerPageOption(event) {
+            // reset selectors
+            this.page = 1;
+            document.getElementById('page').value = this.page;
+
+            // retrieve new data
             this.per_page = event.target.value;
             this.retrievePlayers();
         },
@@ -112,9 +117,18 @@ export default {
         queryByName(event) {
             this.search = event.target.value;
 
-            // force re-load if search string differs
+            // run search if search string differs
             if(this.old_search !== this.search){ 
+                // reset selectors
+                this.page = 1;
+                document.getElementById('page').value = this.page;
+                this.per_page = 25;
+                document.getElementById('perpageoption').value = this.per_page;
+
+                // retrieve data
                 this.retrievePlayers();
+
+                // update current search terms
                 this.old_search = this.search;
             }
         },
