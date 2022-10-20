@@ -1,21 +1,20 @@
 <template>
     <div class="container">
         <div class="row justify-content-between mb-3">
-            <div class="col-md-4 text-start">
-                <label>Show
-                    <InputSelectComponent
-                        :name="'per-page-option'"
-                        :id="'perpageoption'"
-                        :options="[
-                            { 'value': 25, 'displayText': '25' },
-                            { 'value': 50, 'displayText': '50' },
-                            { 'value': 75, 'displayText': '75' },
-                            { 'value': 100, 'displayText': '100' },
-                        ]"
-                        @change="togglePerPageOption($event)"
-                        v-model="per_page"
-                    ></InputSelectComponent>
-                records</label>
+            <div class="col-md-2 text-start">
+                <label>Records per page:</label>
+                <InputSelectComponent
+                    :name="'per-page-option'"
+                    :id="'perpageoption'"
+                    :options="[
+                        { 'value': 25, 'displayText': '25' },
+                        { 'value': 50, 'displayText': '50' },
+                        { 'value': 75, 'displayText': '75' },
+                        { 'value': 100, 'displayText': '100' },
+                    ]"
+                    @change="togglePerPageOption($event)"
+                    v-model="per_page"
+                ></InputSelectComponent>
             </div>
 
             <!-- need to paginate this later... -->
@@ -26,7 +25,7 @@
                 </select>
             </div> -->
 
-            <div class="col-md-4 text-end">
+            <div class="col-md-4 my-auto">
                 <input type="text" name="search" class="form-control" @blur="queryByName($event)" placeholder="Player search"
                     @keyup.enter="queryByName($event)" />
             </div>
