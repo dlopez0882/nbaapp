@@ -69,7 +69,7 @@
 
 <script>
     import axios from "axios";
-    import GamesInfoComponent from "../components/GamesInfoComponent.vue";
+    import GamesInfoComponent from "@/components/GamesInfoComponent.vue";
     import InputSelectComponent from "@/components/InputSelectComponent.vue";
 
     export default {
