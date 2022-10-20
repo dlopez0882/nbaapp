@@ -17,9 +17,5 @@
             'id': String,
             'options': [Array, Number]
         },
-
-        mounted() {
-            console.log(typeof this.options);
-        }
     }
 </script>
