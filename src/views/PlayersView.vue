@@ -2,15 +2,20 @@
     <div class="container">
         <div class="row justify-content-between mb-3">
             <div class="col-md-4 text-start">
-                <span>Show: </span>
-                <select name="per-page-option" id="perpageoption" @change="togglePerPageOption($event)"
-                    v-model="per_page">
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>
-                <span> records</span>
+                <label>Show
+                    <InputSelectComponent
+                        :name="'per-page-option'"
+                        :id="'perpageoption'"
+                        :options="[
+                            { 'value': 25, 'displayText': '25' },
+                            { 'value': 50, 'displayText': '50' },
+                            { 'value': 75, 'displayText': '75' },
+                            { 'value': 100, 'displayText': '100' },
+                        ]"
+                        @change="togglePerPageOption($event)"
+                        v-model="per_page"
+                    ></InputSelectComponent>
+                records</label>
             </div>
 
             <!-- need to paginate this later... -->
@@ -47,10 +52,13 @@
     <div class="container">
         <div class="row justify-content-between mb-3">
             <div class="col-md-4 text-start">
-                <span>Page: </span>
-                <select name="page" id="page" @change="togglePageOption($event)">
-                    <option v-for="page in pages" :value="page">{{ page }}</option>
-                </select>
+                <label>Page: </label>
+                <InputSelectComponent
+                    :name="'page'"
+                    :id="'page'"
+                    :options="pages"
+                    @change="togglePageOption($event)"
+                ></InputSelectComponent>
             </div>
         </div>
     </div>
@@ -59,17 +67,19 @@
 <script>
 import axios from "axios";
 import TableComponent from "@/components/TableComponent.vue";
+import InputSelectComponent from "@/components/InputSelectComponent.vue";
 
 export default {
     name: "PlayersView",
     components: { 
         TableComponent,
+        InputSelectComponent,
     },
 
     data() {
         return {
             page: "1",
-            pages: "",
+            pages: 1,
             per_page: "25",
             search: "",
             old_search: "",
