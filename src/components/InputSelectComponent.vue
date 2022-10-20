@@ -2,7 +2,6 @@
 <!-- note: v-for can take integers -->
 <template>
     <select :name="name" :id="id">
-        
         <option v-if="typeof this.options == 'number'" v-for="option in options" :value="option">{{ option }}</option>
         <option v-else v-for="option in options" :value="option.value">{{ option.displayText }}</option>
     </select>
