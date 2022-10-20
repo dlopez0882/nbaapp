@@ -5,19 +5,32 @@
                 <div class="row row justify-content-around">
                     <div class="form-group col-md-4 mb-3">
                         <label for="teams">Team:</label>
-                        <select name="teams" id="teams" class="form-control" aria-label="select team" v-model="selectedTeam">
-                            <option v-if="displayLoadingOption" value="" selected>-- Loading... --</option>
-                            <option v-else value="" selected>-- Select team --</option>
-                            <option v-for="team in teams" :key="team.id" :value="team.id">{{ team.full_name }}</option>
-                        </select>
+                        <InputSelectComponent
+                            :name="'teams'"
+                            :id="'teams'"
+                            :options="teamsSelectorArray"
+                            :aria-label="'select team'"
+                            v-model="selectedTeam">
+                            <template v-slot:defaultOption>
+                                <option v-if="displayLoadingOption" value="" selected>-- Loading... --</option>
+                                <option v-else value="" selected>-- Select team --</option>
+                            </template>
+                        
+                        </InputSelectComponent>
                     </div>
 
                     <div class="form-group col-md-4 mb-3">
                         <label for="teams">Season:</label>
-                        <select name="seasons" id="seasons" class="form-control" aria-label="select season" v-model="selectedSeason">
-                            <option value="" selected>-- Select season --</option>
-                            <option v-for="season in seasonOptions" :value="season.value">{{ season.displayValue }}</option>
-                        </select>
+                        <InputSelectComponent
+                            :name="'seasons'"
+                            :id="'seasons'"
+                            :options="seasonOptions"
+                            :aria-label="'select season'"
+                            v-model="selectedSeason">
+                            <template v-slot:defaultOption>
+                                <option value="" selected>-- Select season --</option>
+                            </template>
+                        ></InputSelectComponent>
                     </div>
                 </div>
 
@@ -57,17 +70,20 @@
 <script>
     import axios from "axios";
     import GamesInfoComponent from "../components/GamesInfoComponent.vue";
+    import InputSelectComponent from "@/components/InputSelectComponent.vue";
 
     export default {
         name: "GamesView",
 
         components: {
             GamesInfoComponent,
+            InputSelectComponent,
         },
 
         data() {
             return {
                 teams: [], // data returned from /teams API that populates Team selection menu
+                teamsSelectorArray: [], // formatted array to work with InputSelectComponent
                 selectedTeam: "", // data to be passed to GamesInfoComponent prop "team_ids"
                 seasonOptions: [], // generated year options
                 selectedSeason: "", // data to be passed to GamesInfoComponent prop "season"
@@ -87,6 +103,14 @@
                     // console.log(response.data.data);
                     this.teams = response.data.data;
                     this.reviseNames();
+
+                    for(let i = 0; i < this.teams.length; i++) {
+                        let innerObj = {};
+                        innerObj["displayText"] = this.teams[i].full_name;
+                        innerObj["value"] = this.teams[i].id;
+                        this.teamsSelectorArray.push(innerObj);
+                    }  
+
                 })
                 .catch(error => {
                     console.log(error);
@@ -100,7 +124,7 @@
             const currentYear = new Date().getFullYear();
             for(let i = 1979; i < currentYear; i++) {
                 let innerObj = {};
-                innerObj["displayValue"] = i + "-" + (i + 1);
+                innerObj["displayText"] = i + "-" + (i + 1);
                 innerObj["value"] = i;
                 this.seasonOptions.push(innerObj);
             }  
