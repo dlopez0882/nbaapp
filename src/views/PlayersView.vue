@@ -12,6 +12,7 @@
                         { 'value': 75, 'displayText': '75' },
                         { 'value': 100, 'displayText': '100' },
                     ]"
+                    :aria-label="'select number of records to display'"
                     @change="togglePerPageOption($event)"
                     v-model="per_page"
                 ></InputSelectComponent>
@@ -48,12 +49,13 @@
                         :name="'page'"
                         :id="'page'"
                         :options="pages"
+                        :aria-label="'select page'"
                         @change="togglePageOption($event)"
                     ></InputSelectComponent>
                 </label>
             </div>
         </div>
-        
+
         <!-- need to paginate this later... -->
         <!-- <div class="col-md-4">
             <label for="page">Page: </label>
