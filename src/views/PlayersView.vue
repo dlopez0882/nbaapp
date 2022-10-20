@@ -17,14 +17,6 @@
                 ></InputSelectComponent>
             </div>
 
-            <!-- need to paginate this later... -->
-            <!-- <div class="col-md-4">
-                <label for="page">Page: </label>
-                <select name="page" id="page" class="form-control" @change="queryByPage($event)">
-                    <option v-for="page in pages" :value="page">{{ page }}</option>
-                </select>
-            </div> -->
-
             <div class="col-md-4 my-auto">
                 <input type="text" name="search" class="form-control" @blur="queryByName($event)" placeholder="Player search"
                     @keyup.enter="queryByName($event)" />
@@ -61,6 +53,14 @@
                 </label>
             </div>
         </div>
+        
+        <!-- need to paginate this later... -->
+        <!-- <div class="col-md-4">
+            <label for="page">Page: </label>
+            <select name="page" id="page" class="form-control" @change="queryByPage($event)">
+                <option v-for="page in pages" :value="page">{{ page }}</option>
+            </select>
+        </div> -->
     </div>
 </template>
 
