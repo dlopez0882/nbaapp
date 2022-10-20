@@ -52,13 +52,14 @@
     <div class="container">
         <div class="row justify-content-between mb-3">
             <div class="col-md-4 text-start">
-                <label>Page: </label>
-                <InputSelectComponent
-                    :name="'page'"
-                    :id="'page'"
-                    :options="pages"
-                    @change="togglePageOption($event)"
-                ></InputSelectComponent>
+                <label>Page:
+                    <InputSelectComponent
+                        :name="'page'"
+                        :id="'page'"
+                        :options="pages"
+                        @change="togglePageOption($event)"
+                    ></InputSelectComponent>
+                </label>
             </div>
         </div>
     </div>
