@@ -1,27 +1,23 @@
 <template>
     <div class="container">
         <div class="row justify-content-between mb-3">
-            <div class="col-md-4 text-start">
-                <span>Show: </span>
-                <select name="per-page-option" id="perpageoption" @change="togglePerPageOption($event)"
-                    v-model="per_page">
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="75">75</option>
-                    <option value="100">100</option>
-                </select>
-                <span> records</span>
+            <div class="col-md-2 text-start">
+                <label>Records per page:</label>
+                <SelectComponent
+                    :name="'per-page-option'"
+                    :id="'perpageoption'"
+                    :options="[
+                        { 'value': 25, 'displayText': '25' },
+                        { 'value': 50, 'displayText': '50' },
+                        { 'value': 75, 'displayText': '75' },
+                        { 'value': 100, 'displayText': '100' },
+                    ]"
+                    :aria-label="'select number of records to display'"
+                    v-model="per_page"
+                ></SelectComponent>
             </div>
 
-            <!-- need to paginate this later... -->
-            <!-- <div class="col-md-4">
-                <label for="page">Page: </label>
-                <select name="page" id="page" class="form-control" @change="queryByPage($event)">
-                    <option v-for="page in pages" :value="page">{{ page }}</option>
-                </select>
-            </div> -->
-
-            <div class="col-md-4 text-end">
+            <div class="col-md-4 my-auto">
                 <input type="text" name="search" class="form-control" @blur="queryByName($event)" placeholder="Player search"
                     @keyup.enter="queryByName($event)" />
             </div>
@@ -47,29 +43,44 @@
     <div class="container">
         <div class="row justify-content-between mb-3">
             <div class="col-md-4 text-start">
-                <span>Page: </span>
-                <select name="page" id="page" @change="togglePageOption($event)">
-                    <option v-for="page in pages" :value="page">{{ page }}</option>
-                </select>
+                <label>Page:
+                    <SelectComponent
+                        :name="'page'"
+                        :id="'page'"
+                        :options="pages"
+                        :aria-label="'select page'"
+                        v-model="page"
+                    ></SelectComponent>
+                </label>
             </div>
         </div>
+
+        <!-- need to paginate this later... -->
+        <!-- <div class="col-md-4">
+            <label for="page">Page: </label>
+            <select name="page" id="page" class="form-control" @change="queryByPage($event)">
+                <option v-for="page in pages" :value="page">{{ page }}</option>
+            </select>
+        </div> -->
     </div>
 </template>
 
 <script>
 import axios from "axios";
 import TableComponent from "@/components/TableComponent.vue";
+import SelectComponent from "@/components/SelectComponent.vue";
 
 export default {
     name: "PlayersView",
     components: { 
         TableComponent,
+        SelectComponent,
     },
 
     data() {
         return {
             page: "1",
-            pages: "",
+            pages: 1,
             per_page: "25",
             search: "",
             old_search: "",
@@ -79,6 +90,16 @@ export default {
 
     mounted() {
         this.retrievePlayers();
+    },
+
+    watch: {
+        per_page() {
+            this.togglePerPageOption();
+        },
+
+        page() {
+            this.togglePageOption();
+        },
     },
 
     methods: {
@@ -101,13 +122,12 @@ export default {
                 });
         },
 
-        togglePerPageOption(event) {
+        togglePerPageOption() {
             // reset selectors
             this.page = 1;
             document.getElementById('page').value = this.page;
 
             // retrieve new data
-            this.per_page = event.target.value;
             this.retrievePlayers();
         },
 
@@ -130,8 +150,7 @@ export default {
             }
         },
 
-        togglePageOption(event) {
-            this.page = event.target.value;
+        togglePageOption() {
             this.retrievePlayers();
         },
 
