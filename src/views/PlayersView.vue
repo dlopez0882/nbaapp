@@ -25,21 +25,23 @@
     </div>
 
     <div class="container">
-        <TableComponent
-            :header="[
-                { 'heading': 'First Name', 'title': 'First Name' },
-                { 'heading': 'Last Name', 'title': 'Last Name' },
-                { 'heading': 'Position', 'title': 'Position' },
-                { 'heading': 'Team', 'title': 'Team' },
-            ]"
-            :body="players"
-            :bodyFields="[
-                'first_name',
-                'last_name',
-                'position',
-                'teamName'
-            ]"
-        ></TableComponent>
+        <div class="mb-2">
+            <TableComponent
+                :header="[
+                    { 'heading': 'First Name', 'title': 'First Name' },
+                    { 'heading': 'Last Name', 'title': 'Last Name' },
+                    { 'heading': 'Position', 'title': 'Position' },
+                    { 'heading': 'Team', 'title': 'Team' },
+                ]"
+                :body="players"
+                :bodyFields="[
+                    'first_name',
+                    'last_name',
+                    'position',
+                    'teamName'
+                ]"
+            ></TableComponent>
+        </div>
     </div>
 
     <div class="container">
