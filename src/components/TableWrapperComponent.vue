@@ -1,3 +1,4 @@
+<!-- a component to wrap TableComponent.vue with a specified css wrapper class -->
 <template>
     <div :class="wrapperClass">
         <slot name="component"></slot>

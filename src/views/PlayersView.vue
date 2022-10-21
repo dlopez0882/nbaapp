@@ -40,7 +40,7 @@
                             'first_name',
                             'last_name',
                             'position',
-                            'teamName'
+                            'teamName',
                         ]"
                     ></TableComponent>
                 </template>
