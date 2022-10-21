@@ -3,7 +3,7 @@
         <div class="row justify-content-between mb-3">
             <div class="col-md-2 text-start">
                 <label>Records per page:</label>
-                <InputSelectComponent
+                <SelectComponent
                     :name="'per-page-option'"
                     :id="'perpageoption'"
                     :options="[
@@ -14,7 +14,7 @@
                     ]"
                     :aria-label="'select number of records to display'"
                     v-model="per_page"
-                ></InputSelectComponent>
+                ></SelectComponent>
             </div>
 
             <div class="col-md-4 my-auto">
@@ -44,13 +44,13 @@
         <div class="row justify-content-between mb-3">
             <div class="col-md-4 text-start">
                 <label>Page:
-                    <InputSelectComponent
+                    <SelectComponent
                         :name="'page'"
                         :id="'page'"
                         :options="pages"
                         :aria-label="'select page'"
                         v-model="page"
-                    ></InputSelectComponent>
+                    ></SelectComponent>
                 </label>
             </div>
         </div>
@@ -68,13 +68,13 @@
 <script>
 import axios from "axios";
 import TableComponent from "@/components/TableComponent.vue";
-import InputSelectComponent from "@/components/InputSelectComponent.vue";
+import SelectComponent from "@/components/SelectComponent.vue";
 
 export default {
     name: "PlayersView",
     components: { 
         TableComponent,
-        InputSelectComponent,
+        SelectComponent,
     },
 
     data() {

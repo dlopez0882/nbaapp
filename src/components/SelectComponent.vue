@@ -14,7 +14,7 @@
 
 <script>
     export default {
-        name: "InputSelectComponent",
+        name: "SelectComponent",
 
         props: {
             name: String,

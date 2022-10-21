@@ -5,7 +5,7 @@
                 <div class="row row justify-content-around">
                     <div class="form-group col-md-4 mb-3">
                         <label for="teams">Team:</label>
-                        <InputSelectComponent
+                        <SelectComponent
                             :name="'teams'"
                             :id="'teams'"
                             :options="teamsSelectorArray"
@@ -15,13 +15,12 @@
                                 <option v-if="displayLoadingOption" value="" selected>-- Loading... --</option>
                                 <option v-else value="" selected>-- Select team --</option>
                             </template>
-                        
-                        </InputSelectComponent>
+                        </SelectComponent>
                     </div>
 
                     <div class="form-group col-md-4 mb-3">
                         <label for="teams">Season:</label>
-                        <InputSelectComponent
+                        <SelectComponent
                             :name="'seasons'"
                             :id="'seasons'"
                             :options="seasonOptions"
@@ -30,7 +29,7 @@
                             <template v-slot:defaultOption>
                                 <option value="" selected>-- Select season --</option>
                             </template>
-                        ></InputSelectComponent>
+                        ></SelectComponent>
                     </div>
                 </div>
 
@@ -70,20 +69,20 @@
 <script>
     import axios from "axios";
     import GamesInfoComponent from "@/components/GamesInfoComponent.vue";
-    import InputSelectComponent from "@/components/InputSelectComponent.vue";
+    import SelectComponent from "@/components/SelectComponent.vue";
 
     export default {
         name: "GamesView",
 
         components: {
             GamesInfoComponent,
-            InputSelectComponent,
+            SelectComponent,
         },
 
         data() {
             return {
                 teams: [], // data returned from /teams API that populates Team selection menu
-                teamsSelectorArray: [], // formatted array to work with InputSelectComponent
+                teamsSelectorArray: [], // formatted array to work with SelectComponent
                 selectedTeam: "", // data to be passed to GamesInfoComponent prop "team_ids"
                 seasonOptions: [], // generated year options
                 selectedSeason: "", // data to be passed to GamesInfoComponent prop "season"
