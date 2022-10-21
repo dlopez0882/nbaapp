@@ -13,7 +13,6 @@
                         { 'value': 100, 'displayText': '100' },
                     ]"
                     :aria-label="'select number of records to display'"
-                    @change="togglePerPageOption($event)"
                     v-model="per_page"
                 ></InputSelectComponent>
             </div>
@@ -93,6 +92,12 @@ export default {
         this.retrievePlayers();
     },
 
+    watch: {
+        per_page() {
+            this.togglePerPageOption();
+        }
+    },
+
     methods: {
         retrievePlayers() {
             const headers = {
@@ -113,13 +118,12 @@ export default {
                 });
         },
 
-        togglePerPageOption(event) {
+        togglePerPageOption() {
             // reset selectors
             this.page = 1;
             document.getElementById('page').value = this.page;
 
             // retrieve new data
-            this.per_page = event.target.value;
             this.retrievePlayers();
         },
 

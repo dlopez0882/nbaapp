@@ -5,7 +5,7 @@
 -->
 
 <template>
-    <select :name="name" :id="id" class="form-select" :aria-label="ariaLabel" @change="$emit('update:modelValue', $event.target.value)">
+    <select :name="name" :id="id" class="form-select" :aria-label="ariaLabel" @change="updateValue">
         <slot name="defaultOption"></slot>
         <option v-if="typeof this.options == 'number'" v-for="option in options" :value="option">{{ option }}</option>
         <option v-else v-for="option in options" :value="option.value">{{ option.displayText }}</option>
@@ -23,5 +23,11 @@
             ariaLabel: String,
             modelValue: String,
         },
+
+        methods: {
+            updateValue(event) {
+                this.$emit('update:modelValue', event.target.value);
+            }
+        }
     }
 </script>
