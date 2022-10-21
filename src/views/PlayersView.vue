@@ -49,7 +49,7 @@
                         :id="'page'"
                         :options="pages"
                         :aria-label="'select page'"
-                        @change="togglePageOption($event)"
+                        v-model="page"
                     ></InputSelectComponent>
                 </label>
             </div>
@@ -95,7 +95,11 @@ export default {
     watch: {
         per_page() {
             this.togglePerPageOption();
-        }
+        },
+
+        page() {
+            this.togglePageOption();
+        },
     },
 
     methods: {
@@ -146,8 +150,7 @@ export default {
             }
         },
 
-        togglePageOption(event) {
-            this.page = event.target.value;
+        togglePageOption() {
             this.retrievePlayers();
         },
 
