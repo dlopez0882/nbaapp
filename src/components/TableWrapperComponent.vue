@@ -1,16 +1,22 @@
 <template>
-    <div class="table-scrollable">
+    <div :class="wrapperClass">
         <slot name="component"></slot>
     </div>
 </template>
 
 <script>
     export default {
-        name: "TableScrollableComponent",
+        name: "TableWrapperComponent",
+        props: {
+            wrapperClass: String,
+        }
     }
 </script>
 
 <style scoped>
+.table-shadow {
+    box-shadow: inset 0 0 5px rgba(150, 150 ,150,0.35);
+}
 .table-scrollable {
     overflow-x: auto;
     max-width: 300px;

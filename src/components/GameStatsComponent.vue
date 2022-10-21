@@ -7,7 +7,7 @@
                     <button type="button" class="btn-close" aria-label="Close" @click="$emit('close')"></button>
                 </div>
                 <div class="modal-body">
-                    <TableScrollableComponent>
+                    <TableWrapperComponent :wrapperClass="'table-scrollable'">
                         <template v-slot:component>
                             <TableComponent
                                 :header="[
@@ -59,7 +59,7 @@
                                 ]">
                             </TableComponent>
                         </template>
-                    </TableScrollableComponent>
+                    </TableWrapperComponent>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light me-2" @click="$emit('close')">
@@ -76,14 +76,14 @@
 import axios from 'axios';
 import { abbreviationRetroizer } from '../modules/retroizer';
 import TableComponent from '@/components/TableComponent.vue';
-import TableScrollableComponent from '@/components/TableScrollableComponent.vue';
+import TableWrapperComponent from '@/components/TableWrapperComponent.vue';
 
 export default {
     name: "GameStatsComponent",
 
     components: {
         TableComponent,
-        TableScrollableComponent,
+        TableWrapperComponent,
     },
 
     data() {

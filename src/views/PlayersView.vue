@@ -26,21 +26,25 @@
 
     <div class="container">
         <div class="mb-2">
-            <TableComponent
-                :header="[
-                    { 'heading': 'First Name', 'title': 'First Name' },
-                    { 'heading': 'Last Name', 'title': 'Last Name' },
-                    { 'heading': 'Position', 'title': 'Position' },
-                    { 'heading': 'Team', 'title': 'Team' },
-                ]"
-                :body="players"
-                :bodyFields="[
-                    'first_name',
-                    'last_name',
-                    'position',
-                    'teamName'
-                ]"
-            ></TableComponent>
+            <TableWrapperComponent :wrapperClass="'table-shadow'">
+                <template v-slot:component>
+                    <TableComponent
+                        :header="[
+                            { 'heading': 'First Name', 'title': 'First Name' },
+                            { 'heading': 'Last Name', 'title': 'Last Name' },
+                            { 'heading': 'Position', 'title': 'Position' },
+                            { 'heading': 'Team', 'title': 'Team' },
+                        ]"
+                        :body="players"
+                        :bodyFields="[
+                            'first_name',
+                            'last_name',
+                            'position',
+                            'teamName'
+                        ]"
+                    ></TableComponent>
+                </template>
+            </TableWrapperComponent>
         </div>
     </div>
 
@@ -73,12 +77,14 @@
 import axios from "axios";
 import TableComponent from "@/components/TableComponent.vue";
 import SelectComponent from "@/components/SelectComponent.vue";
+import TableWrapperComponent from '@/components/TableWrapperComponent.vue';
 
 export default {
     name: "PlayersView",
     components: { 
         TableComponent,
         SelectComponent,
+        TableWrapperComponent,
     },
 
     data() {
