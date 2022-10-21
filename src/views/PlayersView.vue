@@ -24,21 +24,23 @@
         </div>
     </div>
 
-    <TableComponent
-        :header="[
-            { 'heading': 'First Name', 'title': 'First Name' },
-            { 'heading': 'Last Name', 'title': 'Last Name' },
-            { 'heading': 'Position', 'title': 'Position' },
-            { 'heading': 'Team', 'title': 'Team' },
-        ]"
-        :body="players"
-        :bodyFields="[
-            'first_name',
-            'last_name',
-            'position',
-            'teamName'
-        ]"
-    ></TableComponent>
+    <div class="container">
+        <TableComponent
+            :header="[
+                { 'heading': 'First Name', 'title': 'First Name' },
+                { 'heading': 'Last Name', 'title': 'Last Name' },
+                { 'heading': 'Position', 'title': 'Position' },
+                { 'heading': 'Team', 'title': 'Team' },
+            ]"
+            :body="players"
+            :bodyFields="[
+                'first_name',
+                'last_name',
+                'position',
+                'teamName'
+            ]"
+        ></TableComponent>
+    </div>
 
     <div class="container">
         <div class="row justify-content-between mb-3">
