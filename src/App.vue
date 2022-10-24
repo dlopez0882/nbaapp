@@ -2,8 +2,8 @@
   <nav>
     <router-link to="/">Home</router-link> |
     <!-- <router-link to="/about">About</router-link> | -->
-    <router-link to="/players">Players</router-link> |
-    <router-link to="/games">Games</router-link>
+    <router-link to="/nbaapp/players">Players</router-link> |
+    <router-link to="/nbaapp/games">Games</router-link>
   </nav>
   <router-view />
 </template>

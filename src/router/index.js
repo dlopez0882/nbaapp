@@ -5,6 +5,10 @@ import GamesView from "../views/GamesView.vue";
 
 const routes = [
   {
+    path: '/',
+    redirect: { name: 'home' }
+  },
+  {
     path: "/nbaapp/",
     name: "home",
     component: HomeView,
