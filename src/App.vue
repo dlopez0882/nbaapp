@@ -5,7 +5,16 @@
     <router-link to="/players">Players</router-link> |
     <router-link to="/games">Games</router-link>
   </nav>
-  <router-view />
+
+  <!-- don't preserve component state -->
+  <!-- <router-view /> -->
+
+  <!-- preserve component states when switching between routes -->
+  <router-view v-slot="{ Component }">
+    <keep-alive>
+      <component :is="Component" :key="$route.fullPath" />
+    </keep-alive>
+  </router-view>
 </template>
 
 <style>
