@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory, createWebHashHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import PlayersView from "../views/PlayersView.vue";
 import GamesView from "../views/GamesView.vue";
@@ -30,8 +30,9 @@ const routes = [
   },
 ];
 
+// use hash mode since app is deployed to github pages (GP), and GP doesn't support SPA OoB
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHashHistory(process.env.BASE_URL),
   routes,
 });
 
