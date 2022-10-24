@@ -6,7 +6,7 @@ import GamesView from "../views/GamesView.vue";
 const routes = [
   {
     path: "/",
-    name: "home",
+    name: "Home",
     component: HomeView,
   },
 //   {
@@ -20,12 +20,12 @@ const routes = [
 //   },
   {
     path: "/players",
-    name: "players",
+    name: "Players",
     component: PlayersView,
   },
   {
     path: "/games",
-    name: "games",
+    name: "Games",
     component: GamesView,
   },
 ];
@@ -34,6 +34,14 @@ const routes = [
 const router = createRouter({
   history: createWebHashHistory(process.env.BASE_URL),
   routes,
+});
+
+// set proper <title> whenever route is accessed
+router.beforeEach((to, from, next) => {
+    document.title = `${ process.env.VUE_APP_TITLE } - ${ to.name }`;
+    next();
+    // explicitly return false to cancel the navigation
+    return false
 });
 
 export default router;
