@@ -5,11 +5,7 @@ import GamesView from "../views/GamesView.vue";
 
 const routes = [
   {
-    path: '/',
-    redirect: { name: 'home' }
-  },
-  {
-    path: "/nbaapp/",
+    path: "/",
     name: "home",
     component: HomeView,
   },
@@ -23,12 +19,12 @@ const routes = [
 //       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
 //   },
   {
-    path: "/nbaapp/players",
+    path: "/players",
     name: "players",
     component: PlayersView,
   },
   {
-    path: "/nbaapp/games",
+    path: "/games",
     name: "games",
     component: GamesView,
   },
