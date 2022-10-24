@@ -5,7 +5,7 @@ import GamesView from "../views/GamesView.vue";
 
 const routes = [
   {
-    path: "/",
+    path: "/nbaapp/",
     name: "home",
     component: HomeView,
   },
@@ -19,20 +19,19 @@ const routes = [
 //       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
 //   },
   {
-    path: "/players",
+    path: "/nbaapp/players",
     name: "players",
     component: PlayersView,
   },
   {
-    path: "/games",
+    path: "/nbaapp/games",
     name: "games",
     component: GamesView,
   },
 ];
 
 const router = createRouter({
-//   history: createWebHistory(process.env.BASE_URL),
-  history: createWebHistory('/nbaapp/'),
+  history: createWebHistory(process.env.BASE_URL),
   routes,
 });
 
