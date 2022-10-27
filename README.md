@@ -1,4 +1,10 @@
-# nbaapp
+# NBA App
+
+## Description
+
+A SPA made with Vue.JS that displays information about both past and present NBA players, along with game stats.
+
+This application was made using [Vue CLI](https://cli.vuejs.org/). Data is provided from [Free NBA API hosted on Rapid API](https://rapidapi.com/theapiguy/api/free-nba/).
 
 ## Project setup
 ```
@@ -20,5 +26,12 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## How to Use the Project
+
+1. Navigate to http://localhost:8080 (or any appropriate route)
+2. Click on "Players" vue-router link to view player data.
+3. Click on "Games" vue-router link to view game data.
+    * Game data from API goes as far back as 1979-1980 NBA season.
+    * Select a team and a season, and click "Show games!" button to retireve data.
+    * Click on "View game stats" link in any score card to view box score of a particular game.
