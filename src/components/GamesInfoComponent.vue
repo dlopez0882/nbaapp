@@ -13,7 +13,10 @@
                 <button class="nav-link" id="regular-season-upcoming-tab" data-bs-toggle="tab" data-bs-target="#regular-season-upcoming" type="button" role="tab" aria-controls="regular-season-upcoming" aria-selected="false">Regular Season - Upcoming</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="playoffs-tab" data-bs-toggle="tab" data-bs-target="#playoffs" type="button" role="tab" aria-controls="playoffs" aria-selected="false">Playoffs</button>
+                <button class="nav-link" id="playoffs-completed-tab" data-bs-toggle="tab" data-bs-target="#playoffs-completed" type="button" role="tab" aria-controls="playoffs-completed" aria-selected="false">Playoffs - Completed</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="playoffs-upcoming-tab" data-bs-toggle="tab" data-bs-target="#playoffs-upcoming" type="button" role="tab" aria-controls="playoffs-upcoming" aria-selected="false">Playoffs - Upcoming</button>
             </li>
         </ul>
         
@@ -52,11 +55,22 @@
                 </div> -->
             </div>
 
-            <div class="tab-pane fade" id="playoffs" role="tabpanel" aria-labelledby="playoffs-tab">
+            <div class="tab-pane fade" id="playoffs-completed" role="tabpanel" aria-labelledby="playoffs-completed-tab">
                 <div class="mt-1" v-if="postSeasonData.length < 1 && displayTabs">
                     <p>No playoffs data available.</p>
                 </div>
-                <div v-else id="postSeasonGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
+                <div v-else id="postSeasonCompletedGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
+                    <div class="col" v-for="dataPoint in postSeasonData" :key="dataPoint.id">
+                        <GameCardComponent :data = "dataPoint"></GameCardComponent>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="playoffs-upcoming" role="tabpanel" aria-labelledby="playoffs-upcoming-tab">
+                <div class="mt-1" v-if="postSeasonData.length < 1 && displayTabs">
+                    <p>No playoffs data available.</p>
+                </div>
+                <div v-else id="postSeasonUpcomingGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
                     <div class="col" v-for="dataPoint in postSeasonData" :key="dataPoint.id">
                         <GameCardComponent :data = "dataPoint"></GameCardComponent>
                     </div>
