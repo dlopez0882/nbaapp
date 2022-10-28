@@ -23,7 +23,10 @@
                     <div class="col" v-for="dataPoint in sortedRegularSeasonGameData" :key="dataPoint.id">
                         <div class="card">
                             <div class="card-header">{{ dataPoint.visitor_team.full_name }} at {{ dataPoint.home_team.full_name }}</div>
-                            <div class="card-body">
+                            <div v-if="dataPoint.visitor_team_score == 0 && dataPoint.home_team_score == 0" class="card-body">
+                                <p>Date: {{ dateFormatter(dataPoint.date) }} @ {{ dataPoint.status }}</p>
+                            </div>
+                            <div v-else class="card-body">
                                 <p>Date: {{ dateFormatter(dataPoint.date) }}</p>
                                 <p>Score: {{ dataPoint.visitor_team.abbreviation }} {{ dataPoint.visitor_team_score }} | {{ dataPoint.home_team.abbreviation }} {{ dataPoint.home_team_score }} ({{ dataPoint.status }})</p>
                                 <p><a href="javascript:void(0)" @click="showStatsModal(dataPoint.id, dataPoint.visitor_team.abbreviation, dataPoint.home_team.abbreviation, dateFormatter(dataPoint.date))" @keydown.esc="hideStatsModal()">View game stats</a></p>
@@ -41,7 +44,10 @@
                     <div class="col" v-for="dataPoint in sortedPostSeasonGameData" :key="dataPoint.id">
                         <div class="card">
                             <div class="card-header">{{ dataPoint.visitor_team.full_name }} at {{ dataPoint.home_team.full_name }}</div>
-                            <div class="card-body">
+                            <div v-if="dataPoint.visitor_team_score == 0 && dataPoint.home_team_score == 0" class="card-body">
+                                <p>Date: {{ dateFormatter(dataPoint.date) }} @ {{ dataPoint.status }}</p>
+                            </div>
+                            <div v-else class="card-body">
                                 <p>Date: {{ dateFormatter(dataPoint.date) }}</p>
                                 <p>Score: {{ dataPoint.visitor_team.abbreviation }} {{ dataPoint.visitor_team_score }} | {{ dataPoint.home_team.abbreviation }} {{ dataPoint.home_team_score }} ({{ dataPoint.status }})</p>
                                 <p><a href="javascript:void(0)" @click="showStatsModal(dataPoint.id, dataPoint.visitor_team.abbreviation, dataPoint.home_team.abbreviation, dateFormatter(dataPoint.date))" @keydown.esc="hideStatsModal()">View game stats</a></p>

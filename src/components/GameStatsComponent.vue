@@ -94,7 +94,7 @@ export default {
 
     props: {
         gameid: Number,
-        season: Number,
+        season: String,
         statCardTitle: String,
     },
 

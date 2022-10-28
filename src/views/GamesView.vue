@@ -121,7 +121,7 @@
             // generate season options
             // API has data starting from 1979 season
             const currentYear = new Date().getFullYear();
-            for(let i = 1979; i < currentYear; i++) {
+            for(let i = 1979; i <= currentYear; i++) {
                 let innerObj = {};
                 innerObj["displayText"] = i + "-" + (i + 1);
                 innerObj["value"] = i;
