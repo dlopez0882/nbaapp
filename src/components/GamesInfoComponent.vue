@@ -21,17 +21,7 @@
                 </div>
                 <div v-else id="regularSeasonGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
                     <div class="col" v-for="dataPoint in regularSeasonData" :key="dataPoint.id">
-                        <div class="card">
-                            <div class="card-header">{{ dataPoint.visitor_team.full_name }} at {{ dataPoint.home_team.full_name }}</div>
-                            <div v-if="dataPoint.visitor_team_score == 0 && dataPoint.home_team_score == 0" class="card-body">
-                                <p>Date: {{ dataPoint.date }} @ {{ dataPoint.status }}</p>
-                            </div>
-                            <div v-else class="card-body">
-                                <p>Date: {{ dataPoint.date }}</p>
-                                <p v-html="highlightWinner(dataPoint.visitor_team.abbreviation, dataPoint.visitor_team_score, dataPoint.home_team.abbreviation, dataPoint.home_team_score, dataPoint.status)"></p>
-                                <p><a href="javascript:void(0)" @click="showStatsModal(dataPoint.id, dataPoint.visitor_team.abbreviation, dataPoint.home_team.abbreviation, dataPoint.date)" @keydown.esc="hideStatsModal()">View game stats</a></p>
-                            </div>
-                        </div>
+                        <GameCardComponent :data = "dataPoint"></GameCardComponent>
                     </div>
                 </div>
             </div>
@@ -42,17 +32,7 @@
                 </div>
                 <div v-else id="postSeasonGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
                     <div class="col" v-for="dataPoint in postSeasonData" :key="dataPoint.id">
-                        <div class="card">
-                            <div class="card-header">{{ dataPoint.visitor_team.full_name }} at {{ dataPoint.home_team.full_name }}</div>
-                            <div v-if="dataPoint.visitor_team_score == 0 && dataPoint.home_team_score == 0" class="card-body">
-                                <p>Date: {{ dataPoint.date }} @ {{ dataPoint.status }}</p>
-                            </div>
-                            <div v-else class="card-body">
-                                <p>Date: {{ dataPoint.date }}</p>
-                                <p v-html="highlightWinner(dataPoint.visitor_team.abbreviation, dataPoint.visitor_team_score, dataPoint.home_team.abbreviation, dataPoint.home_team_score, dataPoint.status)"></p>
-                                <p><a href="javascript:void(0)" @click="showStatsModal(dataPoint.id, dataPoint.visitor_team.abbreviation, dataPoint.home_team.abbreviation, dataPoint.date)" @keydown.esc="hideStatsModal()">View game stats</a></p>
-                            </div>
-                        </div>
+                        <GameCardComponent :data = "dataPoint"></GameCardComponent>
                     </div>
                 </div>
             </div>
@@ -71,13 +51,15 @@
 <script>
 import axios from 'axios';
 import GameStatsComponent from './GameStatsComponent.vue';
+import GameCardComponent from '@/components/GameCardComponent.vue';
 import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
 
     export default {
         name: "GamesInfoComponent",
 
         components: {
-            GameStatsComponent
+            GameStatsComponent,
+            GameCardComponent,
         },
 
         data() {
@@ -128,15 +110,6 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
         },
 
         methods: {
-            // highlights the winning team's score if game status is finalized
-            highlightWinner(visitorTeam, visitorScore, homeTeam, homeScore, gameStatus) {
-                return (gameStatus.toUpperCase() === 'FINAL')  ? 
-                    (visitorScore > homeScore) ?
-                        `Score: <strong>` + visitorTeam + ` ` + visitorScore + `</strong> | ` + homeTeam + ` ` + homeScore + ` (` + gameStatus + `)` : 
-                        `Score: ` + visitorTeam + ` ` + visitorScore + ` | <strong>` + homeTeam + ` ` + homeScore + `</strong> (` + gameStatus + `)`
-                    : visitorTeam + ` ` + visitorScore + ` | ` + homeTeam + ` ` + homeScore + ` (` + gameStatus + `)`
-            },
-
             /* 
             * for each item, format date to YYYY-MM-DD and retroize team(s) as needed
             * return array of cards by ascending date order
