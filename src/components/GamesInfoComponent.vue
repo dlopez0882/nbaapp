@@ -82,7 +82,6 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
 
         data() {
             return {
-                gameData: [],
                 regularSeasonData: [],
                 postSeasonData: [],
                 displaySpinner: false,
@@ -110,30 +109,31 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
                     "X-RapidAPI-Key": "959819e95cmshecf23a99cc98e23p15b9d9jsn5e3fd589ab8a",
                     "X-RapidAPI-Host": "free-nba.p.rapidapi.com",
                 }
-                // TODO: make per_page and page parameters dynamic
-                axios.get("https://free-nba.p.rapidapi.com/games?seasons[]=" + this.season + "&team_ids[]=" + this.team_ids + "&per_page=100&page=1",{ headers })
-                    .then(response => {
-                        // sort data by date
-                        this.gameData = this.sortGamesByDate(response.data.data);
-
-                        this.gameData.forEach((item) => {
+                // TODO: make per_page and page parameters dynamic                    
+                Promise.all([
+                    axios.get("https://free-nba.p.rapidapi.com/games?seasons[]=" + this.season + "&team_ids[]=" + this.team_ids + "&postseason=false&per_page=100&page=1",{ headers }),
+                    axios.get("https://free-nba.p.rapidapi.com/games?seasons[]=" + this.season + "&team_ids[]=" + this.team_ids + "&postseason=true&per_page=100&page=1",{ headers })
+                    ])
+                    .then(axios.spread((regular_season_response, postseason_response) => {
+                        // sort data by date and format accordingly
+                        this.regularSeasonData = this.sortGamesByDate(regular_season_response.data.data);
+                        this.regularSeasonData.forEach((item) => {
                             item.date = this.dateFormatter(item.date);
                             item.home_team.full_name = nameRetroizer(this.season, item.home_team.full_name);
                             item.home_team.abbreviation = abbreviationRetroizer(this.season, item.home_team.abbreviation);
                             item.visitor_team.full_name = nameRetroizer(this.season, item.visitor_team.full_name);
                             item.visitor_team.abbreviation = abbreviationRetroizer(this.season, item.visitor_team.abbreviation);
-                        })
+                        });
 
-
-                        // make regular season and post season arrays...
-                        this.gameData.forEach((item) => {
-                            if(item.postseason === false) {
-                                this.regularSeasonData.push(item);
-                            } else {
-                                this.postSeasonData.push(item);
-                            }
-                        })
-                    })
+                        this.postSeasonData = this.sortGamesByDate(postseason_response.data.data);
+                        this.postSeasonData.forEach((item) => {
+                            item.date = this.dateFormatter(item.date);
+                            item.home_team.full_name = nameRetroizer(this.season, item.home_team.full_name);
+                            item.home_team.abbreviation = abbreviationRetroizer(this.season, item.home_team.abbreviation);
+                            item.visitor_team.full_name = nameRetroizer(this.season, item.visitor_team.full_name);
+                            item.visitor_team.abbreviation = abbreviationRetroizer(this.season, item.visitor_team.abbreviation);
+                        });
+                    }))
                     .catch(error => {
                         console.log(error);
                     })
