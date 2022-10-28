@@ -64,7 +64,9 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
 
         data() {
             return {
-                regularSeasonData: [],
+                // regularSeasonData: [],
+                regularSeasonCompletedData: [],
+                regularSeasonUpcomingData: [],
                 postSeasonData: [],
                 displaySpinner: false,
                 displayTabs: false,
@@ -96,7 +98,11 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
                     axios.get("https://free-nba.p.rapidapi.com/games?seasons[]=" + this.season + "&team_ids[]=" + this.team_ids + "&postseason=true&per_page=100&page=1", { headers })
                 ])
                     .then(axios.spread((regular_season_response, postseason_response) => {
-                        this.regularSeasonData = this.cardDisplayCleanup(regular_season_response.data.data);
+                        // this.regularSeasonData = this.cardDisplayCleanup(regular_season_response.data.data);
+                        this.cardDisplayCleanup(regular_season_response.data.data).forEach((item) => {
+                            (item.status.toUpperCase() == "FINAL") ? this.regularSeasonCompletedData.push(item) : this.regularSeasonUpcomingData.push(item);
+                        })
+
                         this.postSeasonData = this.cardDisplayCleanup(postseason_response.data.data);
                     }))
                     .catch(error => {
