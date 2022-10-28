@@ -28,7 +28,7 @@
                             </div>
                             <div v-else class="card-body">
                                 <p>Date: {{ dataPoint.date }}</p>
-                                <p>Score: {{ dataPoint.visitor_team.abbreviation }} {{ dataPoint.visitor_team_score }} | {{ dataPoint.home_team.abbreviation }} {{ dataPoint.home_team_score }} ({{ dataPoint.status }})</p>
+                                <p v-html="highlightWinner(dataPoint.visitor_team.abbreviation, dataPoint.visitor_team_score, dataPoint.home_team.abbreviation, dataPoint.home_team_score, dataPoint.status)"></p>
                                 <p><a href="javascript:void(0)" @click="showStatsModal(dataPoint.id, dataPoint.visitor_team.abbreviation, dataPoint.home_team.abbreviation, dataPoint.date)" @keydown.esc="hideStatsModal()">View game stats</a></p>
                             </div>
                         </div>
@@ -49,7 +49,7 @@
                             </div>
                             <div v-else class="card-body">
                                 <p>Date: {{ dataPoint.date }}</p>
-                                <p>Score: {{ dataPoint.visitor_team.abbreviation }} {{ dataPoint.visitor_team_score }} | {{ dataPoint.home_team.abbreviation }} {{ dataPoint.home_team_score }} ({{ dataPoint.status }})</p>
+                                <p v-html="highlightWinner(dataPoint.visitor_team.abbreviation, dataPoint.visitor_team_score, dataPoint.home_team.abbreviation, dataPoint.home_team_score, dataPoint.status)"></p>
                                 <p><a href="javascript:void(0)" @click="showStatsModal(dataPoint.id, dataPoint.visitor_team.abbreviation, dataPoint.home_team.abbreviation, dataPoint.date)" @keydown.esc="hideStatsModal()">View game stats</a></p>
                             </div>
                         </div>
@@ -128,6 +128,13 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
         },
 
         methods: {
+            // highlights the winning team's score
+            highlightWinner(visitorTeam, visitorScore, homeTeam, homeScore, gameStatus) {
+                return ((gameStatus == 'Final') && visitorScore > homeScore) ? 
+                `Score: <strong>` + visitorTeam + ` ` + visitorScore + `</strong> | ` + homeTeam + ` ` + homeScore + ` (` + gameStatus + `)` : 
+                `Score: ` + visitorTeam + ` ` + visitorScore + ` | <strong>` + homeTeam + ` ` + homeScore + `</strong> (` + gameStatus + `)`;
+            },
+
             /* 
             * for each item, format date to YYYY-MM-DD and retroize team(s) as needed
             * return array of cards by ascending date order
