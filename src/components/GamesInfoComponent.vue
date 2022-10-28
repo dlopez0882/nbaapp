@@ -128,11 +128,13 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
         },
 
         methods: {
-            // highlights the winning team's score
+            // highlights the winning team's score if game status is finalized
             highlightWinner(visitorTeam, visitorScore, homeTeam, homeScore, gameStatus) {
-                return ((gameStatus == 'Final') && visitorScore > homeScore) ? 
-                `Score: <strong>` + visitorTeam + ` ` + visitorScore + `</strong> | ` + homeTeam + ` ` + homeScore + ` (` + gameStatus + `)` : 
-                `Score: ` + visitorTeam + ` ` + visitorScore + ` | <strong>` + homeTeam + ` ` + homeScore + `</strong> (` + gameStatus + `)`;
+                return (gameStatus.toUpperCase() === 'FINAL')  ? 
+                    (visitorScore > homeScore) ?
+                        `Score: <strong>` + visitorTeam + ` ` + visitorScore + `</strong> | ` + homeTeam + ` ` + homeScore + ` (` + gameStatus + `)` : 
+                        `Score: ` + visitorTeam + ` ` + visitorScore + ` | <strong>` + homeTeam + ` ` + homeScore + `</strong> (` + gameStatus + `)`
+                    : visitorTeam + ` ` + visitorScore + ` | ` + homeTeam + ` ` + homeScore + ` (` + gameStatus + `)`
             },
 
             /* 
