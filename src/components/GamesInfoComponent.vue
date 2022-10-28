@@ -7,7 +7,10 @@
 
         <ul v-else-if="!displaySpinner && displayTabs" class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="regular-season-tab" data-bs-toggle="tab" data-bs-target="#regular-season" type="button" role="tab" aria-controls="regular-season" aria-selected="true">Regular Season</button>
+                <button class="nav-link active" id="regular-season-completed-tab" data-bs-toggle="tab" data-bs-target="#regular-season-completed" type="button" role="tab" aria-controls="regular-season-completed" aria-selected="true">Regular Season - Completed</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="regular-season-upcoming-tab" data-bs-toggle="tab" data-bs-target="#regular-season-upcoming" type="button" role="tab" aria-controls="regular-season-upcoming" aria-selected="false">Regular Season - Upcoming</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="playoffs-tab" data-bs-toggle="tab" data-bs-target="#playoffs" type="button" role="tab" aria-controls="playoffs" aria-selected="false">Playoffs</button>
@@ -15,15 +18,38 @@
         </ul>
         
         <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="regular-season" role="tabpanel" aria-labelledby="regular-season-tab">
-                <div class="mt-1" v-if="regularSeasonData.length < 1 && displayTabs">
+            <div class="tab-pane fade show active" id="regular-season-completed" role="tabpanel" aria-labelledby="regular-season-completed-tab">
+                <div class="mt-1" v-if="regularSeasonCompletedData.length < 1 && displayTabs">
                     <p>No regular season data available.</p>
                 </div>
-                <div v-else id="regularSeasonGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
+
+                <div v-else id="regularSeasonCompletedGameInfo">
+                    <div class="row row-cols-1 row-cols-md-3 g-4 mt-1">
+                        <div class="col" v-for="dataPoint in regularSeasonCompletedData" :key="dataPoint.id">
+                            <GameCardComponent :data = "dataPoint"></GameCardComponent>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="regular-season-upcoming" role="tabpanel" aria-labelledby="regular-season-upcoming-tab">
+                <div class="mt-1" v-if="regularSeasonUpcomingData.length < 1 && displayTabs">
+                    <p>No regular season data available.</p>
+                </div>
+
+                <div v-else id="regularSeasonUpcomingGameInfo">
+                    <div class="row row-cols-1 row-cols-md-3 g-4 mt-1">
+                        <div class="col" v-for="dataPoint in regularSeasonUpcomingData" :key="dataPoint.id">
+                            <GameCardComponent :data = "dataPoint"></GameCardComponent>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div v-else id="regularSeasonGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
                     <div class="col" v-for="dataPoint in regularSeasonData" :key="dataPoint.id">
                         <GameCardComponent :data = "dataPoint"></GameCardComponent>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <div class="tab-pane fade" id="playoffs" role="tabpanel" aria-labelledby="playoffs-tab">
