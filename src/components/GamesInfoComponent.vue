@@ -82,7 +82,6 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
 
         data() {
             return {
-                gameData: [],
                 regularSeasonData: [],
                 postSeasonData: [],
                 displaySpinner: false,
@@ -109,31 +108,15 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
                 const headers = {
                     "X-RapidAPI-Key": "959819e95cmshecf23a99cc98e23p15b9d9jsn5e3fd589ab8a",
                     "X-RapidAPI-Host": "free-nba.p.rapidapi.com",
-                }
-                // TODO: make per_page and page parameters dynamic
-                axios.get("https://free-nba.p.rapidapi.com/games?seasons[]=" + this.season + "&team_ids[]=" + this.team_ids + "&per_page=100&page=1",{ headers })
-                    .then(response => {
-                        // sort data by date
-                        this.gameData = this.sortGamesByDate(response.data.data);
-
-                        this.gameData.forEach((item) => {
-                            item.date = this.dateFormatter(item.date);
-                            item.home_team.full_name = nameRetroizer(this.season, item.home_team.full_name);
-                            item.home_team.abbreviation = abbreviationRetroizer(this.season, item.home_team.abbreviation);
-                            item.visitor_team.full_name = nameRetroizer(this.season, item.visitor_team.full_name);
-                            item.visitor_team.abbreviation = abbreviationRetroizer(this.season, item.visitor_team.abbreviation);
-                        })
-
-
-                        // make regular season and post season arrays...
-                        this.gameData.forEach((item) => {
-                            if(item.postseason === false) {
-                                this.regularSeasonData.push(item);
-                            } else {
-                                this.postSeasonData.push(item);
-                            }
-                        })
-                    })
+                }                 
+                Promise.all([
+                    axios.get("https://free-nba.p.rapidapi.com/games?seasons[]=" + this.season + "&team_ids[]=" + this.team_ids + "&postseason=false&per_page=100&page=1", { headers }),
+                    axios.get("https://free-nba.p.rapidapi.com/games?seasons[]=" + this.season + "&team_ids[]=" + this.team_ids + "&postseason=true&per_page=100&page=1", { headers })
+                ])
+                    .then(axios.spread((regular_season_response, postseason_response) => {
+                        this.regularSeasonData = this.cardDisplayCleanup(regular_season_response.data.data);
+                        this.postSeasonData = this.cardDisplayCleanup(postseason_response.data.data);
+                    }))
                     .catch(error => {
                         console.log(error);
                     })
@@ -145,8 +128,19 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
         },
 
         methods: {
-            // sorts cards by ascending date order
-            sortGamesByDate(array) {
+            /* 
+            * for each item, format date to YYYY-MM-DD and retroize team(s) as needed
+            * return array of cards by ascending date order
+            */
+            cardDisplayCleanup(array) {
+                array.forEach((item) => {
+                    item.date = this.dateFormatter(item.date);
+                    item.home_team.full_name = nameRetroizer(this.season, item.home_team.full_name);
+                    item.home_team.abbreviation = abbreviationRetroizer(this.season, item.home_team.abbreviation);
+                    item.visitor_team.full_name = nameRetroizer(this.season, item.visitor_team.full_name);
+                    item.visitor_team.abbreviation = abbreviationRetroizer(this.season, item.visitor_team.abbreviation);
+                });
+
                 return array.slice()
                     .sort((a, b) => new Date(a.date) - new Date(b.date));
             },
