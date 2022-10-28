@@ -56,22 +56,22 @@
             </div>
 
             <div class="tab-pane fade" id="playoffs-completed" role="tabpanel" aria-labelledby="playoffs-completed-tab">
-                <div class="mt-1" v-if="postSeasonData.length < 1 && displayTabs">
+                <div class="mt-1" v-if="postSeasonCompletedData.length < 1 && displayTabs">
                     <p>No playoffs data available.</p>
                 </div>
                 <div v-else id="postSeasonCompletedGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
-                    <div class="col" v-for="dataPoint in postSeasonData" :key="dataPoint.id">
+                    <div class="col" v-for="dataPoint in postSeasonCompletedData" :key="dataPoint.id">
                         <GameCardComponent :data = "dataPoint"></GameCardComponent>
                     </div>
                 </div>
             </div>
 
             <div class="tab-pane fade" id="playoffs-upcoming" role="tabpanel" aria-labelledby="playoffs-upcoming-tab">
-                <div class="mt-1" v-if="postSeasonData.length < 1 && displayTabs">
+                <div class="mt-1" v-if="postSeasonUpcomingData.length < 1 && displayTabs">
                     <p>No playoffs data available.</p>
                 </div>
                 <div v-else id="postSeasonUpcomingGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
-                    <div class="col" v-for="dataPoint in postSeasonData" :key="dataPoint.id">
+                    <div class="col" v-for="dataPoint in postSeasonUpcomingData" :key="dataPoint.id">
                         <GameCardComponent :data = "dataPoint"></GameCardComponent>
                     </div>
                 </div>
@@ -107,7 +107,9 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
                 // regularSeasonData: [],
                 regularSeasonCompletedData: [],
                 regularSeasonUpcomingData: [],
-                postSeasonData: [],
+                // postSeasonData: [],
+                postSeasonCompletedData: [],
+                postSeasonUpcomingData: [],
                 displaySpinner: false,
                 displayTabs: false,
                 displayStatsModal: false,
@@ -141,9 +143,12 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
                         // this.regularSeasonData = this.cardDisplayCleanup(regular_season_response.data.data);
                         this.cardDisplayCleanup(regular_season_response.data.data).forEach((item) => {
                             (item.status.toUpperCase() == "FINAL") ? this.regularSeasonCompletedData.push(item) : this.regularSeasonUpcomingData.push(item);
-                        })
+                        });
 
-                        this.postSeasonData = this.cardDisplayCleanup(postseason_response.data.data);
+                        // this.postSeasonData = this.cardDisplayCleanup(postseason_response.data.data);
+                        this.cardDisplayCleanup(postseason_response.data.data).forEach((item) => {
+                            (item.status.toUpperCase() == "FINAL") ? this.postSeasonCompletedData.push(item) : this.postSeasonUpcomingData.push(item);
+                        });
                     }))
                     .catch(error => {
                         console.log(error);
