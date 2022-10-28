@@ -108,23 +108,15 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
                 const headers = {
                     "X-RapidAPI-Key": "959819e95cmshecf23a99cc98e23p15b9d9jsn5e3fd589ab8a",
                     "X-RapidAPI-Host": "free-nba.p.rapidapi.com",
-                }
-                // TODO: make per_page and page parameters dynamic                    
+                }                 
                 Promise.all([
                     axios.get("https://free-nba.p.rapidapi.com/games?seasons[]=" + this.season + "&team_ids[]=" + this.team_ids + "&postseason=false&per_page=100&page=1", { headers }),
                     axios.get("https://free-nba.p.rapidapi.com/games?seasons[]=" + this.season + "&team_ids[]=" + this.team_ids + "&postseason=true&per_page=100&page=1", { headers })
                 ])
                     .then(axios.spread((regular_season_response, postseason_response) => {
-                        // regular season games - sort data by date
                         this.regularSeasonData = this.sortGamesByDate(regular_season_response.data.data);
-
-                        // regular season games - format dates, and revise for historical teams
                         this.dateFormatterAndRetroize(this.regularSeasonData);
-
-                        // postseason games - sort data by date
                         this.postSeasonData = this.sortGamesByDate(postseason_response.data.data);
-
-                        // postseason games - format dates, and revise for historical teams
                         this.dateFormatterAndRetroize(this.postSeasonData);
                     }))
                     .catch(error => {
@@ -144,6 +136,7 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
                     .sort((a, b) => new Date(a.date) - new Date(b.date));
             },
 
+            // perform date formatting and retrozing for each card
             dateFormatterAndRetroize(array) {
                 return array.forEach((item) => {
                     item.date = this.dateFormatter(item.date);
