@@ -111,28 +111,21 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
                 }
                 // TODO: make per_page and page parameters dynamic                    
                 Promise.all([
-                    axios.get("https://free-nba.p.rapidapi.com/games?seasons[]=" + this.season + "&team_ids[]=" + this.team_ids + "&postseason=false&per_page=100&page=1",{ headers }),
-                    axios.get("https://free-nba.p.rapidapi.com/games?seasons[]=" + this.season + "&team_ids[]=" + this.team_ids + "&postseason=true&per_page=100&page=1",{ headers })
-                    ])
+                    axios.get("https://free-nba.p.rapidapi.com/games?seasons[]=" + this.season + "&team_ids[]=" + this.team_ids + "&postseason=false&per_page=100&page=1", { headers }),
+                    axios.get("https://free-nba.p.rapidapi.com/games?seasons[]=" + this.season + "&team_ids[]=" + this.team_ids + "&postseason=true&per_page=100&page=1", { headers })
+                ])
                     .then(axios.spread((regular_season_response, postseason_response) => {
-                        // sort data by date and format accordingly
+                        // regular season games - sort data by date
                         this.regularSeasonData = this.sortGamesByDate(regular_season_response.data.data);
-                        this.regularSeasonData.forEach((item) => {
-                            item.date = this.dateFormatter(item.date);
-                            item.home_team.full_name = nameRetroizer(this.season, item.home_team.full_name);
-                            item.home_team.abbreviation = abbreviationRetroizer(this.season, item.home_team.abbreviation);
-                            item.visitor_team.full_name = nameRetroizer(this.season, item.visitor_team.full_name);
-                            item.visitor_team.abbreviation = abbreviationRetroizer(this.season, item.visitor_team.abbreviation);
-                        });
 
+                        // regular season games - format dates, and revise for historical teams
+                        this.dateFormatterAndRetroize(this.regularSeasonData);
+
+                        // postseason games - sort data by date
                         this.postSeasonData = this.sortGamesByDate(postseason_response.data.data);
-                        this.postSeasonData.forEach((item) => {
-                            item.date = this.dateFormatter(item.date);
-                            item.home_team.full_name = nameRetroizer(this.season, item.home_team.full_name);
-                            item.home_team.abbreviation = abbreviationRetroizer(this.season, item.home_team.abbreviation);
-                            item.visitor_team.full_name = nameRetroizer(this.season, item.visitor_team.full_name);
-                            item.visitor_team.abbreviation = abbreviationRetroizer(this.season, item.visitor_team.abbreviation);
-                        });
+
+                        // postseason games - format dates, and revise for historical teams
+                        this.dateFormatterAndRetroize(this.postSeasonData);
                     }))
                     .catch(error => {
                         console.log(error);
@@ -149,6 +142,16 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
             sortGamesByDate(array) {
                 return array.slice()
                     .sort((a, b) => new Date(a.date) - new Date(b.date));
+            },
+
+            dateFormatterAndRetroize(array) {
+                return array.forEach((item) => {
+                    item.date = this.dateFormatter(item.date);
+                    item.home_team.full_name = nameRetroizer(this.season, item.home_team.full_name);
+                    item.home_team.abbreviation = abbreviationRetroizer(this.season, item.home_team.abbreviation);
+                    item.visitor_team.full_name = nameRetroizer(this.season, item.visitor_team.full_name);
+                    item.visitor_team.abbreviation = abbreviationRetroizer(this.season, item.visitor_team.abbreviation);
+                });
             },
 
             dateFormatter(timestamp) {
