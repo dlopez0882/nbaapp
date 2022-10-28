@@ -47,12 +47,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- <div v-else id="regularSeasonGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
-                    <div class="col" v-for="dataPoint in regularSeasonData" :key="dataPoint.id">
-                        <GameCardComponent :data = "dataPoint"></GameCardComponent>
-                    </div>
-                </div> -->
             </div>
 
             <div class="tab-pane fade" id="playoffs-completed" role="tabpanel" aria-labelledby="playoffs-completed-tab">
@@ -104,10 +98,8 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
 
         data() {
             return {
-                // regularSeasonData: [],
                 regularSeasonCompletedData: [],
                 regularSeasonUpcomingData: [],
-                // postSeasonData: [],
                 postSeasonCompletedData: [],
                 postSeasonUpcomingData: [],
                 displaySpinner: false,
@@ -140,12 +132,10 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
                     axios.get("https://free-nba.p.rapidapi.com/games?seasons[]=" + this.season + "&team_ids[]=" + this.team_ids + "&postseason=true&per_page=100&page=1", { headers })
                 ])
                     .then(axios.spread((regular_season_response, postseason_response) => {
-                        // this.regularSeasonData = this.cardDisplayCleanup(regular_season_response.data.data);
                         this.cardDisplayCleanup(regular_season_response.data.data).forEach((item) => {
                             (item.status.toUpperCase() == "FINAL") ? this.regularSeasonCompletedData.push(item) : this.regularSeasonUpcomingData.push(item);
                         });
 
-                        // this.postSeasonData = this.cardDisplayCleanup(postseason_response.data.data);
                         this.cardDisplayCleanup(postseason_response.data.data).forEach((item) => {
                             (item.status.toUpperCase() == "FINAL") ? this.postSeasonCompletedData.push(item) : this.postSeasonUpcomingData.push(item);
                         });
