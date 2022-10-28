@@ -16,20 +16,20 @@
         
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="regular-season" role="tabpanel" aria-labelledby="regular-season-tab">
-                <div class="mt-1" v-if="sortedRegularSeasonGameData.length < 1 && displayTabs">
+                <div class="mt-1" v-if="regularSeasonData.length < 1 && displayTabs">
                     <p>No regular season data available.</p>
                 </div>
                 <div v-else id="regularSeasonGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
-                    <div class="col" v-for="dataPoint in sortedRegularSeasonGameData" :key="dataPoint.id">
+                    <div class="col" v-for="dataPoint in regularSeasonData" :key="dataPoint.id">
                         <div class="card">
                             <div class="card-header">{{ dataPoint.visitor_team.full_name }} at {{ dataPoint.home_team.full_name }}</div>
                             <div v-if="dataPoint.visitor_team_score == 0 && dataPoint.home_team_score == 0" class="card-body">
-                                <p>Date: {{ dateFormatter(dataPoint.date) }} @ {{ dataPoint.status }}</p>
+                                <p>Date: {{ dataPoint.date }} @ {{ dataPoint.status }}</p>
                             </div>
                             <div v-else class="card-body">
-                                <p>Date: {{ dateFormatter(dataPoint.date) }}</p>
+                                <p>Date: {{ dataPoint.date }}</p>
                                 <p>Score: {{ dataPoint.visitor_team.abbreviation }} {{ dataPoint.visitor_team_score }} | {{ dataPoint.home_team.abbreviation }} {{ dataPoint.home_team_score }} ({{ dataPoint.status }})</p>
-                                <p><a href="javascript:void(0)" @click="showStatsModal(dataPoint.id, dataPoint.visitor_team.abbreviation, dataPoint.home_team.abbreviation, dateFormatter(dataPoint.date))" @keydown.esc="hideStatsModal()">View game stats</a></p>
+                                <p><a href="javascript:void(0)" @click="showStatsModal(dataPoint.id, dataPoint.visitor_team.abbreviation, dataPoint.home_team.abbreviation, dataPoint.date)" @keydown.esc="hideStatsModal()">View game stats</a></p>
                             </div>
                         </div>
                     </div>
@@ -37,20 +37,20 @@
             </div>
 
             <div class="tab-pane fade" id="playoffs" role="tabpanel" aria-labelledby="playoffs-tab">
-                <div class="mt-1" v-if="sortedPostSeasonGameData.length < 1 && displayTabs">
+                <div class="mt-1" v-if="postSeasonData.length < 1 && displayTabs">
                     <p>No playoffs data available.</p>
                 </div>
                 <div v-else id="postSeasonGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
-                    <div class="col" v-for="dataPoint in sortedPostSeasonGameData" :key="dataPoint.id">
+                    <div class="col" v-for="dataPoint in postSeasonData" :key="dataPoint.id">
                         <div class="card">
                             <div class="card-header">{{ dataPoint.visitor_team.full_name }} at {{ dataPoint.home_team.full_name }}</div>
                             <div v-if="dataPoint.visitor_team_score == 0 && dataPoint.home_team_score == 0" class="card-body">
-                                <p>Date: {{ dateFormatter(dataPoint.date) }} @ {{ dataPoint.status }}</p>
+                                <p>Date: {{ dataPoint.date }} @ {{ dataPoint.status }}</p>
                             </div>
                             <div v-else class="card-body">
-                                <p>Date: {{ dateFormatter(dataPoint.date) }}</p>
+                                <p>Date: {{ dataPoint.date }}</p>
                                 <p>Score: {{ dataPoint.visitor_team.abbreviation }} {{ dataPoint.visitor_team_score }} | {{ dataPoint.home_team.abbreviation }} {{ dataPoint.home_team_score }} ({{ dataPoint.status }})</p>
-                                <p><a href="javascript:void(0)" @click="showStatsModal(dataPoint.id, dataPoint.visitor_team.abbreviation, dataPoint.home_team.abbreviation, dateFormatter(dataPoint.date))" @keydown.esc="hideStatsModal()">View game stats</a></p>
+                                <p><a href="javascript:void(0)" @click="showStatsModal(dataPoint.id, dataPoint.visitor_team.abbreviation, dataPoint.home_team.abbreviation, dataPoint.date)" @keydown.esc="hideStatsModal()">View game stats</a></p>
                             </div>
                         </div>
                     </div>
@@ -93,20 +93,6 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
             };
         },
 
-        computed: {
-            // sort regular season data by date
-            sortedRegularSeasonGameData() {
-                return this.regularSeasonData.slice()
-                    .sort((a, b) => new Date(a.date)- new Date(b.date));
-            },
-
-            // sort postseason data by date
-            sortedPostSeasonGameData() {
-                return this.postSeasonData.slice()
-                    .sort((a, b) => new Date(a.date)- new Date(b.date));
-            },
-        },
-
         props: {
             "team_ids": [Number, String],
             "season": [Number, String],
@@ -127,9 +113,11 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
                 // TODO: make per_page and page parameters dynamic
                 axios.get("https://free-nba.p.rapidapi.com/games?seasons[]=" + this.season + "&team_ids[]=" + this.team_ids + "&per_page=100&page=1",{ headers })
                     .then(response => {
-                        this.gameData = response.data.data;
+                        // sort data by date
+                        this.gameData = this.sortGamesByDate(response.data.data);
 
                         this.gameData.forEach((item) => {
+                            item.date = this.dateFormatter(item.date);
                             item.home_team.full_name = nameRetroizer(this.season, item.home_team.full_name);
                             item.home_team.abbreviation = abbreviationRetroizer(this.season, item.home_team.abbreviation);
                             item.visitor_team.full_name = nameRetroizer(this.season, item.visitor_team.full_name);
@@ -157,6 +145,12 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
         },
 
         methods: {
+            // sorts cards by ascending date order
+            sortGamesByDate(array) {
+                return array.slice()
+                    .sort((a, b) => new Date(a.date) - new Date(b.date));
+            },
+
             dateFormatter(timestamp) {
                 return timestamp.slice(0, -14);
             },
