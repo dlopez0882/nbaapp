@@ -31,22 +31,17 @@
                 <div class="mt-1" v-if="regularSeasonCompletedData.length < 1 && displayTabs">
                     <p>No regular season data available.</p>
                 </div>
-
-                <div v-else id="regularSeasonCompletedGameInfo">
-                    <div class="row row-cols-1 row-cols-md-3 g-4 mt-1">
-                        <div class="col" v-for="dataPoint in regularSeasonCompletedData" :key="dataPoint.id">
-                            <GameCardComponent :data = "dataPoint"></GameCardComponent>
-                        </div>
+                <div v-else id="regularSeasonCompletedGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
+                    <div class="col" v-for="dataPoint in regularSeasonCompletedData" :key="dataPoint.id">
+                        <GameCardComponent :data = "dataPoint"></GameCardComponent>
                     </div>
                 </div>
             </div>
 
             <div class="tab-pane fade" id="regular-season-upcoming" role="tabpanel" aria-labelledby="regular-season-upcoming-tab">
-                <div id="regularSeasonUpcomingGameInfo">
-                    <div class="row row-cols-1 row-cols-md-3 g-4 mt-1">
-                        <div class="col" v-for="dataPoint in regularSeasonUpcomingData" :key="dataPoint.id">
-                            <GameCardComponent :data = "dataPoint"></GameCardComponent>
-                        </div>
+                <div id="regularSeasonUpcomingGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
+                    <div class="col" v-for="dataPoint in regularSeasonUpcomingData" :key="dataPoint.id">
+                        <GameCardComponent :data = "dataPoint"></GameCardComponent>
                     </div>
                 </div>
             </div>
