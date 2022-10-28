@@ -42,11 +42,7 @@
             </div>
 
             <div class="tab-pane fade" id="regular-season-upcoming" role="tabpanel" aria-labelledby="regular-season-upcoming-tab">
-                <div class="mt-1" v-if="regularSeasonUpcomingData.length < 1 && displayTabs">
-                    <p>No regular season data available.</p>
-                </div>
-
-                <div v-else id="regularSeasonUpcomingGameInfo">
+                <div id="regularSeasonUpcomingGameInfo">
                     <div class="row row-cols-1 row-cols-md-3 g-4 mt-1">
                         <div class="col" v-for="dataPoint in regularSeasonUpcomingData" :key="dataPoint.id">
                             <GameCardComponent :data = "dataPoint"></GameCardComponent>
@@ -67,10 +63,7 @@
             </div>
 
             <div class="tab-pane fade" id="playoffs-upcoming" role="tabpanel" aria-labelledby="playoffs-upcoming-tab">
-                <div class="mt-1" v-if="postSeasonUpcomingData.length < 1 && displayTabs">
-                    <p>No playoffs data available.</p>
-                </div>
-                <div v-else id="postSeasonUpcomingGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
+                <div id="postSeasonUpcomingGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
                     <div class="col" v-for="dataPoint in postSeasonUpcomingData" :key="dataPoint.id">
                         <GameCardComponent :data = "dataPoint"></GameCardComponent>
                     </div>
