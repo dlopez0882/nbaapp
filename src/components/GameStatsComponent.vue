@@ -99,12 +99,7 @@ export default {
     },
 
     mounted() {
-        const headers = {
-            "X-RapidAPI-Key": "959819e95cmshecf23a99cc98e23p15b9d9jsn5e3fd589ab8a",
-            "X-RapidAPI-Host": "free-nba.p.rapidapi.com",
-        }
-
-        axios.get("https://free-nba.p.rapidapi.com/stats?game_ids[]=" + this.gameid,{ headers })
+        axios.get("https://www.balldontlie.io/api/v1/stats?game_ids[]=" + this.gameid)
             .then(response => {
                 this.stats = response.data.data;
                 this.stats.forEach((item) => {

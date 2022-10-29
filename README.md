@@ -4,7 +4,7 @@
 
 A SPA made with Vue.JS that displays information about both past and present NBA players, along with game stats.
 
-This application was made using [Vue CLI](https://cli.vuejs.org/). Data is provided from [Free NBA API hosted on Rapid API](https://rapidapi.com/theapiguy/api/free-nba/).
+This application was made using [Vue CLI](https://cli.vuejs.org/). Data is provided from [balldontlie API](https://www.balldontlie.io/).
 
 ## Project setup
 ```
