@@ -114,14 +114,8 @@ export default {
 
     methods: {
         retrievePlayers() {
-            const headers = {
-                "X-RapidAPI-Key": "959819e95cmshecf23a99cc98e23p15b9d9jsn5e3fd589ab8a",
-                "X-RapidAPI-Host": "free-nba.p.rapidapi.com",
-            };
-
-            axios.get("https://free-nba.p.rapidapi.com/players?" + "page=" + this.page + "&per_page=" + this.per_page + "&search=" + this.search,
-                    { headers }
-                ).then((response) => {
+            axios.get("https://www.balldontlie.io/api/v1/players?" + "page=" + this.page + "&per_page=" + this.per_page + "&search=" + this.search)
+                .then((response) => {
                     this.players = response.data.data;
                     this.players.forEach((item) => {
                         item.teamName = item.team.full_name;

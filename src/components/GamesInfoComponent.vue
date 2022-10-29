@@ -86,14 +86,10 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
 
             if(this.team_ids !== "" && this.season !== "") {
                 this.displaySpinner = true;
-
-                const headers = {
-                    "X-RapidAPI-Key": "959819e95cmshecf23a99cc98e23p15b9d9jsn5e3fd589ab8a",
-                    "X-RapidAPI-Host": "free-nba.p.rapidapi.com",
-                }                 
+            
                 Promise.all([
-                    axios.get("https://free-nba.p.rapidapi.com/games?seasons[]=" + this.season + "&team_ids[]=" + this.team_ids + "&postseason=false&per_page=100&page=1", { headers }),
-                    axios.get("https://free-nba.p.rapidapi.com/games?seasons[]=" + this.season + "&team_ids[]=" + this.team_ids + "&postseason=true&per_page=100&page=1", { headers })
+                    axios.get("https://www.balldontlie.io/api/v1/games?seasons[]=" + this.season + "&team_ids[]=" + this.team_ids + "&postseason=false&per_page=100&page=1"),
+                    axios.get("https://www.balldontlie.io/api/v1/games?seasons[]=" + this.season + "&team_ids[]=" + this.team_ids + "&postseason=true&per_page=100&page=1")
                 ])
                     .then(axios.spread((regular_season_response, postseason_response) => {
                         this.regularSeasonData = this.cardDisplayCleanup(regular_season_response.data.data);

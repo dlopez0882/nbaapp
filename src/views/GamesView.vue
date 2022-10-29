@@ -92,12 +92,7 @@
         },
 
         mounted() {
-            const headers = {
-                'X-RapidAPI-Key': '959819e95cmshecf23a99cc98e23p15b9d9jsn5e3fd589ab8a',
-                'X-RapidAPI-Host': 'free-nba.p.rapidapi.com',
-            };
-
-            axios.get("https://free-nba.p.rapidapi.com/teams", { headers })
+            axios.get("https://www.balldontlie.io/api/v1/teams")
                 .then(response => {
                     // console.log(response.data.data);
                     this.teams = response.data.data;

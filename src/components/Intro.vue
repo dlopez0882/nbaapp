@@ -2,7 +2,7 @@
   <div class="intro">
     <h1>{{ msg }}</h1>
     <p>An app displaying information about NBA players ands games.</p>
-    <p>Data provided by <a href="https://rapidapi.com/theapiguy/api/free-nba/" target="_blank">Free NBA API</a>.</p>
+    <p>Data provided by <a href="https://www.balldontlie.io/" target="_blank">balldontlie API</a>.</p>
     <p>Made using <a href="https://cli.vuejs.org" target="_blank">vue-cli</a></p>
   </div>
 </template>
