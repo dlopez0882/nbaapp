@@ -26,55 +26,47 @@
             </li>
         </ul>
         
-        <div class="tab-content" id="myTabContent">
-            <GamesTabPaneComponent
-                :tabPaneClass = "'tab-pane fade show active'"
-                :tabPaneId = "'regular-season-completed'"
-                :ariaLabelledby = "'regular-season-completed-tab'"
-                :groupId = "'regular-season-completed-game-info'"
-                :data = "regularSeasonCompletedData"
-                :displayNoDataMsg = "(regularSeasonCompletedData.length < 1 && displayTabs) ? true : false"
-                :noDataMsg = "'No regular season data available.'"
-                :season = "this.season"
-            >
-            </GamesTabPaneComponent>
-
-            <GamesTabPaneComponent
-                :tabPaneClass = "'tab-pane fade'"
-                :tabPaneId = "'regular-season-upcoming'"
-                :ariaLabelledby = "'regular-season-upcoming-tab'"
-                :groupId = "'regular-season-upcoming-game-info'"
-                :data = "regularSeasonUpcomingData"
-                :displayNoDataMsg = "(regularSeasonUpcomingData.length < 1 && displayTabs) ? true : false"
-                :noDataMsg = "'No upcoming regular season data available.'"
-                :season = "this.season"
-            >
-            </GamesTabPaneComponent>
-
-            <GamesTabPaneComponent
-                :tabPaneClass = "'tab-pane fade'"
-                :tabPaneId = "'playoffs-completed'"
-                :ariaLabelledby = "'playoffs-completed-tab'"
-                :groupId = "'playoffs-completed-game-info'"
-                :data = "postSeasonCompletedData"
-                :displayNoDataMsg = "(postSeasonCompletedData.length < 1 && displayTabs) ? true : false"
-                :noDataMsg = "'No playoffs season data available.'"
-                :season = "this.season"
-            >
-            </GamesTabPaneComponent>
-
-            <GamesTabPaneComponent
-                :tabPaneClass = "'tab-pane fade'"
-                :tabPaneId = "'playoffs-upcoming'"
-                :ariaLabelledby = "'playoffs-upcoming-tab'"
-                :groupId = "'playoffs-upcoming-game-info'"
-                :data = "postSeasonUpcomingData"
-                :displayNoDataMsg = "(postSeasonUpcomingData.length < 1 && displayTabs) ? true : false"
-                :noDataMsg = "'No upcoming playoffs season data available.'"
-                :season = "this.season"
-            >
-            </GamesTabPaneComponent>
-        </div>
+        <GamesTabPaneComponent
+            :panes="[
+                {
+                    'tabPaneClass': 'tab-pane fade show active',
+                    'tabPaneId': 'regular-season-completed',
+                    'ariaLabelledby': 'regular-season-completed-tab',
+                    'groupId': 'regular-season-completed-game-info',
+                    'data': regularSeasonCompletedData,
+                    'displayNoDataMsg': (regularSeasonCompletedData.length < 1 && displayTabs) ? true : false,
+                    'noDataMsg': 'No regular season data available.',
+                },
+                {
+                    'tabPaneClass': 'tab-pane fade',
+                    'tabPaneId': 'regular-season-upcoming',
+                    'ariaLabelledby': 'regular-season-upcoming-tab',
+                    'groupId': 'regular-season-upcoming-game-info',
+                    'data': regularSeasonUpcomingData,
+                    'displayNoDataMsg': (regularSeasonUpcomingData.length < 1 && displayTabs) ? true : false,
+                    'noDataMsg': 'No upcoming regular season data available.',
+                },
+                {
+                    'tabPaneClass': 'tab-pane fade',
+                    'tabPaneId': 'playoffs-completed',
+                    'ariaLabelledby': 'playoffs-completed-tab',
+                    'groupId': 'playoffs-completed-game-info',
+                    'data': postSeasonCompletedData,
+                    'displayNoDataMsg': (postSeasonCompletedData.length < 1 && displayTabs) ? true : false,
+                    'noDataMsg': 'No playoff season data available.',
+                },
+                {
+                    'tabPaneClass': 'tab-pane fade',
+                    'tabPaneId': 'playoffs-upcoming',
+                    'ariaLabelledby': 'playoffs-upcoming-tab',
+                    'groupId': 'playoffs-upcoming-game-info',
+                    'data': postSeasonUpcomingData,
+                    'displayNoDataMsg': (postSeasonUpcomingData.length < 1 && displayTabs) ? true : false,
+                    'noDataMsg': 'No upcoming playoff season data available.',
+                },
+            ]"
+            :season = "this.season"
+        ></GamesTabPaneComponent>
     </div>
 </template>
 

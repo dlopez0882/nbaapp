@@ -1,12 +1,15 @@
 <template>
-    <div :class="tabPaneClass" :id="tabPaneId" role="tabpanel" :aria-labelledby="ariaLabelledby">
-        <div :id="groupId" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
-            <p v-if="displayNoDataMsg">{{ noDataMsg }}</p>
-            <div v-else class="col" v-for="dataPoint in data" :key="dataPoint.id">
-                <GameCardComponent :data = "dataPoint"></GameCardComponent>
+    <div class="tab-content" id="myTabContent">
+        <div v-for="pane in panes" :class="pane.tabPaneClass" :id="pane.tabPaneId" role="tabpanel" :aria-labelledby="pane.ariaLabelledby">
+            <div :id="pane.groupId" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
+                <p v-if="pane.displayNoDataMsg">{{ pane.noDataMsg }}</p>
+                <div v-else class="col" v-for="dataPoint in pane.data" :key="dataPoint.id">
+                    <GameCardComponent :data = "dataPoint"></GameCardComponent>
+                </div>
             </div>
         </div>
     </div>
+
     <transition name="modal">
         <GameStatsComponent v-if="displayStatsModal" @close="hideStatsModal()"
             :gameid = "gameid"
@@ -39,14 +42,8 @@ import GameStatsComponent from '@/components/GameStatsComponent.vue';
         },
 
         props: {
-            tabPaneClass: String,
-            tabPaneId: String,
-            ariaLabelledby: String,
-            groupId: String,
-            data: Object,
-            displayNoDataMsg: Boolean,
-            noDataMsg: String,
             season: [Number, String],
+            panes: Array,
         }, 
 
         methods: {
