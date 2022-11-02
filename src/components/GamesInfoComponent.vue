@@ -27,6 +27,40 @@
         </ul>
         
         <GamesTabPaneComponent
+            :tabs="[
+                {
+                    'buttonClass': 'nav-link active',
+                    'buttonId': 'regular-season-completed-tab',
+                    'dataBsTarget': '#regular-season-completed',
+                    'ariaControls': 'regular-season-completed',
+                    'ariaSelected': 'true',
+                    'buttonLabel': (regularSeasonUpcomingData.length > 0) ? 'Regular Season - Completed' : 'Regular Season',
+                },
+                {
+                    'buttonClass': 'nav-link',
+                    'buttonId': 'regular-season-upcoming-tab',
+                    'dataBsTarget': '#regular-season-upcoming',
+                    'ariaControls': 'regular-season-upcoming',
+                    'ariaSelected': 'false',
+                    'buttonLabel': 'Regular Season - Upcoming',
+                },
+                {
+                    'buttonClass': 'nav-link',
+                    'buttonId': 'playoffs-completed-tab',
+                    'dataBsTarget': '#playoffs-completed',
+                    'ariaControls': 'playoffs-completed',
+                    'ariaSelected': 'false',
+                    'buttonLabel': (postSeasonUpcomingData.length > 0) ? 'Playoffs - Completed' : 'Playoffs',
+                },
+                {
+                    'buttonClass': 'nav-link',
+                    'buttonId': 'playoffs-upcoming-tab',
+                    'dataBsTarget': '#playoffs-upcoming',
+                    'ariaControls': 'playoffs-upcoming',
+                    'ariaSelected': 'false',
+                    'buttonLabel': 'Playoffs - Upcoming',
+                },
+            ]"
             :panes="[
                 {
                     'tabPaneClass': 'tab-pane fade show active',
