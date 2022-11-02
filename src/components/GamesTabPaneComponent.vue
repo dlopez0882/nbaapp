@@ -20,7 +20,7 @@
         </li> -->
 
         <li v-for="tab in tabs" class="nav-item" role="presentation">
-            <button :class="tab.buttonClass" :id="tab.buttonId" data-bs-toggle="tab" :data-bs-target="tab.dataBsTarget" type="button" role="tab" :aria-controls="tab.ariaControls" :aria-selected="tab.ariaSelected">
+            <button v-if="tab.displayButton" :class="tab.buttonClass" :id="tab.buttonId" data-bs-toggle="tab" :data-bs-target="tab.dataBsTarget" type="button" role="tab" :aria-controls="tab.ariaControls" :aria-selected="tab.ariaSelected">
                 <span>{{ tab.buttonLabel }}</span>
                 <!-- <span v-if="regularSeasonUpcomingData.length > 0">Regular Season - Completed</span>
                 <span v-else>Regular Season</span> -->

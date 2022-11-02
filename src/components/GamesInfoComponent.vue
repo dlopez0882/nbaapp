@@ -29,6 +29,7 @@
         <GamesTabPaneComponent
             :tabs="[
                 {
+                    'displayButton': true,
                     'buttonClass': 'nav-link active',
                     'buttonId': 'regular-season-completed-tab',
                     'dataBsTarget': '#regular-season-completed',
@@ -37,6 +38,7 @@
                     'buttonLabel': (regularSeasonUpcomingData.length > 0) ? 'Regular Season - Completed' : 'Regular Season',
                 },
                 {
+                    'displayButton': (regularSeasonUpcomingData.length > 0) ? true : false,
                     'buttonClass': 'nav-link',
                     'buttonId': 'regular-season-upcoming-tab',
                     'dataBsTarget': '#regular-season-upcoming',
@@ -45,6 +47,7 @@
                     'buttonLabel': 'Regular Season - Upcoming',
                 },
                 {
+                    'displayButton': true,
                     'buttonClass': 'nav-link',
                     'buttonId': 'playoffs-completed-tab',
                     'dataBsTarget': '#playoffs-completed',
@@ -53,6 +56,7 @@
                     'buttonLabel': (postSeasonUpcomingData.length > 0) ? 'Playoffs - Completed' : 'Playoffs',
                 },
                 {
+                    'displayButton': (postSeasonUpcomingData.length > 0) ? true : false,
                     'buttonClass': 'nav-link',
                     'buttonId': 'playoffs-upcoming-tab',
                     'dataBsTarget': '#playoffs-upcoming',
