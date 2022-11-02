@@ -4,90 +4,99 @@
             <strong>Loading...</strong>
             <div class="spinner-grow ml-auto" role="status" aria-hidden="true"></div>
         </div>
-
-        <ul v-else-if="!displaySpinner && displayTabs" class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="regular-season-completed-tab" data-bs-toggle="tab" data-bs-target="#regular-season-completed" type="button" role="tab" aria-controls="regular-season-completed" aria-selected="true">
-                    <span v-if="regularSeasonUpcomingData.length > 0">Regular Season - Completed</span>
-                    <span v-else>Regular Season</span>
-                </button>
-            </li>
-            <li v-if="regularSeasonUpcomingData.length > 0" class="nav-item" role="presentation">
-                <button class="nav-link" id="regular-season-upcoming-tab" data-bs-toggle="tab" data-bs-target="#regular-season-upcoming" type="button" role="tab" aria-controls="regular-season-upcoming" aria-selected="false">Regular Season - Upcoming</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="playoffs-completed-tab" data-bs-toggle="tab" data-bs-target="#playoffs-completed" type="button" role="tab" aria-controls="playoffs-completed" aria-selected="false">
-                    <span v-if="postSeasonUpcomingData.length > 0">Playoffs - Completed</span>
-                    <span v-else>Playoffs</span>
-                </button>
-            </li>
-            <li v-if="postSeasonUpcomingData.length > 0" class="nav-item" role="presentation">
-                <button class="nav-link" id="playoffs-upcoming-tab" data-bs-toggle="tab" data-bs-target="#playoffs-upcoming" type="button" role="tab" aria-controls="playoffs-upcoming" aria-selected="false">Playoffs - Upcoming</button>
-            </li>
-        </ul>
         
-        <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="regular-season-completed" role="tabpanel" aria-labelledby="regular-season-completed-tab">
-                <div class="mt-1" v-if="regularSeasonCompletedData.length < 1 && displayTabs">
-                    <p>No regular season data available.</p>
-                </div>
-                <div v-else id="regularSeasonCompletedGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
-                    <div class="col" v-for="dataPoint in regularSeasonCompletedData" :key="dataPoint.id">
-                        <GameCardComponent :data = "dataPoint"></GameCardComponent>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-pane fade" id="regular-season-upcoming" role="tabpanel" aria-labelledby="regular-season-upcoming-tab">
-                <div id="regularSeasonUpcomingGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
-                    <div class="col" v-for="dataPoint in regularSeasonUpcomingData" :key="dataPoint.id">
-                        <GameCardComponent :data = "dataPoint"></GameCardComponent>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-pane fade" id="playoffs-completed" role="tabpanel" aria-labelledby="playoffs-completed-tab">
-                <div class="mt-1" v-if="postSeasonCompletedData.length < 1 && displayTabs">
-                    <p>No playoffs data available.</p>
-                </div>
-                <div v-else id="postSeasonCompletedGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
-                    <div class="col" v-for="dataPoint in postSeasonCompletedData" :key="dataPoint.id">
-                        <GameCardComponent :data = "dataPoint"></GameCardComponent>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-pane fade" id="playoffs-upcoming" role="tabpanel" aria-labelledby="playoffs-upcoming-tab">
-                <div id="postSeasonUpcomingGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
-                    <div class="col" v-for="dataPoint in postSeasonUpcomingData" :key="dataPoint.id">
-                        <GameCardComponent :data = "dataPoint"></GameCardComponent>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <transition name="modal">
-            <GameStatsComponent v-if="displayStatsModal" @close="hideStatsModal()"
-                :gameid = "gameid"
-                :season = "this.season"
-                :statCardTitle = "statCardTitle">
-            </GameStatsComponent>
-        </transition>
+        <GamesTabComponent v-else-if="!displaySpinner && displayTabs"
+            :tabs="[
+                {
+                    'displayButton': true,
+                    'buttonClass': 'nav-link active',
+                    'buttonId': 'regular-season-completed-tab',
+                    'dataBsTarget': '#regular-season-completed',
+                    'ariaControls': 'regular-season-completed',
+                    'ariaSelected': 'true',
+                    'buttonLabel': (regularSeasonUpcomingData.length > 0) ? 'Regular Season - Completed' : 'Regular Season',
+                },
+                {
+                    'displayButton': (regularSeasonUpcomingData.length > 0) ? true : false,
+                    'buttonClass': 'nav-link',
+                    'buttonId': 'regular-season-upcoming-tab',
+                    'dataBsTarget': '#regular-season-upcoming',
+                    'ariaControls': 'regular-season-upcoming',
+                    'ariaSelected': 'false',
+                    'buttonLabel': 'Regular Season - Upcoming',
+                },
+                {
+                    'displayButton': true,
+                    'buttonClass': 'nav-link',
+                    'buttonId': 'playoffs-completed-tab',
+                    'dataBsTarget': '#playoffs-completed',
+                    'ariaControls': 'playoffs-completed',
+                    'ariaSelected': 'false',
+                    'buttonLabel': (postSeasonUpcomingData.length > 0) ? 'Playoffs - Completed' : 'Playoffs',
+                },
+                {
+                    'displayButton': (postSeasonUpcomingData.length > 0) ? true : false,
+                    'buttonClass': 'nav-link',
+                    'buttonId': 'playoffs-upcoming-tab',
+                    'dataBsTarget': '#playoffs-upcoming',
+                    'ariaControls': 'playoffs-upcoming',
+                    'ariaSelected': 'false',
+                    'buttonLabel': 'Playoffs - Upcoming',
+                },
+            ]"
+            :panes="[
+                {
+                    'tabPaneClass': 'tab-pane fade show active',
+                    'tabPaneId': 'regular-season-completed',
+                    'ariaLabelledby': 'regular-season-completed-tab',
+                    'groupId': 'regular-season-completed-game-info',
+                    'data': regularSeasonCompletedData,
+                    'displayNoDataMsg': (regularSeasonCompletedData.length < 1 && displayTabs) ? true : false,
+                    'noDataMsg': 'No regular season data available.',
+                },
+                {
+                    'tabPaneClass': 'tab-pane fade',
+                    'tabPaneId': 'regular-season-upcoming',
+                    'ariaLabelledby': 'regular-season-upcoming-tab',
+                    'groupId': 'regular-season-upcoming-game-info',
+                    'data': regularSeasonUpcomingData,
+                    'displayNoDataMsg': (regularSeasonUpcomingData.length < 1 && displayTabs) ? true : false,
+                    'noDataMsg': 'No upcoming regular season data available.',
+                },
+                {
+                    'tabPaneClass': 'tab-pane fade',
+                    'tabPaneId': 'playoffs-completed',
+                    'ariaLabelledby': 'playoffs-completed-tab',
+                    'groupId': 'playoffs-completed-game-info',
+                    'data': postSeasonCompletedData,
+                    'displayNoDataMsg': (postSeasonCompletedData.length < 1 && displayTabs) ? true : false,
+                    'noDataMsg': 'No playoff season data available.',
+                },
+                {
+                    'tabPaneClass': 'tab-pane fade',
+                    'tabPaneId': 'playoffs-upcoming',
+                    'ariaLabelledby': 'playoffs-upcoming-tab',
+                    'groupId': 'playoffs-upcoming-game-info',
+                    'data': postSeasonUpcomingData,
+                    'displayNoDataMsg': (postSeasonUpcomingData.length < 1 && displayTabs) ? true : false,
+                    'noDataMsg': 'No upcoming playoff season data available.',
+                },
+            ]"
+            :season = "this.season"
+        ></GamesTabComponent>
     </div>
 </template>
 
 <script>
 import axios from 'axios';
-import GameStatsComponent from './GameStatsComponent.vue';
-import GameCardComponent from '@/components/GameCardComponent.vue';
+import GamesTabComponent from '@/components/GamesTabComponent.vue';
 import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
 
     export default {
         name: "GamesInfoComponent",
 
         components: {
-            GameStatsComponent,
-            GameCardComponent,
+            GamesTabComponent,
         },
 
         data() {
@@ -98,9 +107,6 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
                 postSeasonUpcomingData: [],
                 displaySpinner: false,
                 displayTabs: false,
-                displayStatsModal: false,
-                gameid: "",
-                statCardTitle: "",
             };
         },
 
@@ -124,10 +130,12 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
                     .then(axios.spread((regular_season_response, postseason_response) => {
                         this.cardDisplayCleanup(regular_season_response.data.data).forEach((item) => {
                             (item.status.toUpperCase() == "FINAL") ? this.regularSeasonCompletedData.push(item) : this.regularSeasonUpcomingData.push(item);
+                            // if status is in ["1st Qtr", "2nd Qtr", "3rd Qtr", "4th Qtr"] push game to currentGameData?
                         });
 
                         this.cardDisplayCleanup(postseason_response.data.data).forEach((item) => {
                             (item.status.toUpperCase() == "FINAL") ? this.postSeasonCompletedData.push(item) : this.postSeasonUpcomingData.push(item);
+                            // if status is in ["1st Qtr", "2nd Qtr", "3rd Qtr", "4th Qtr"] push game to currentGameData?
                         });
                     }))
                     .catch(error => {
@@ -160,18 +168,6 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
 
             dateFormatter(timestamp) {
                 return timestamp.slice(0, -14);
-            },
-
-            showStatsModal(id, visitorteam, hometeam, date) {
-                this.displayStatsModal = true;
-                this.gameid = id;
-                this.statCardTitle = "Stat Card - " + visitorteam + " vs. " + hometeam + " (" + date + ") "
-            },
-
-            hideStatsModal() {
-                this.displayStatsModal = false;
-                this.gameid = "";
-                this.statCardTitle = "";
             },
 
             // Leaving here in case a potential solution for sorting API data becomes available in future
