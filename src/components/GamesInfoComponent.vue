@@ -5,7 +5,7 @@
             <div class="spinner-grow ml-auto" role="status" aria-hidden="true"></div>
         </div>
         
-        <GamesTabPaneComponent v-else-if="!displaySpinner && displayTabs"
+        <GamesTabComponent v-else-if="!displaySpinner && displayTabs"
             :tabs="[
                 {
                     'displayButton': true,
@@ -83,20 +83,20 @@
                 },
             ]"
             :season = "this.season"
-        ></GamesTabPaneComponent>
+        ></GamesTabComponent>
     </div>
 </template>
 
 <script>
 import axios from 'axios';
-import GamesTabPaneComponent from '@/components/GamesTabPaneComponent.vue';
+import GamesTabComponent from '@/components/GamesTabComponent.vue';
 import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
 
     export default {
         name: "GamesInfoComponent",
 
         components: {
-            GamesTabPaneComponent,
+            GamesTabComponent,
         },
 
         data() {

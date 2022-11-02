@@ -32,7 +32,7 @@ import GameCardComponent from '@/components/GameCardComponent.vue';
 import GameStatsComponent from '@/components/GameStatsComponent.vue';
 
     export default {
-        name: "GamesTabPaneComponent",
+        name: "GamesTabComponent",
 
         components: {
             GameCardComponent,
