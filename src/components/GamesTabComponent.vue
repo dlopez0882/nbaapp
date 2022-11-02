@@ -1,3 +1,5 @@
+<!-- A component to render tab(s) and tab pane(s) -->
+
 <template>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li v-for="tab in tabs" class="nav-item" role="presentation">
