@@ -42,8 +42,8 @@ import GameStatsComponent from '@/components/GameStatsComponent.vue';
         },
 
         props: {
-            season: [Number, String],
             panes: Array,
+            season: [Number, String],
         }, 
 
         methods: {
