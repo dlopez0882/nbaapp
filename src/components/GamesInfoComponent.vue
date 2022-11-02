@@ -124,10 +124,12 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
                     .then(axios.spread((regular_season_response, postseason_response) => {
                         this.cardDisplayCleanup(regular_season_response.data.data).forEach((item) => {
                             (item.status.toUpperCase() == "FINAL") ? this.regularSeasonCompletedData.push(item) : this.regularSeasonUpcomingData.push(item);
+                            // if status is in ["1st Qtr", "2nd Qtr", "3rd Qtr", "4th Qtr"] push game to currentGameData?
                         });
 
                         this.cardDisplayCleanup(postseason_response.data.data).forEach((item) => {
                             (item.status.toUpperCase() == "FINAL") ? this.postSeasonCompletedData.push(item) : this.postSeasonUpcomingData.push(item);
+                            // if status is in ["1st Qtr", "2nd Qtr", "3rd Qtr", "4th Qtr"] push game to currentGameData?
                         });
                     }))
                     .catch(error => {
