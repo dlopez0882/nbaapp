@@ -27,67 +27,67 @@
         </ul>
         
         <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="regular-season-completed" role="tabpanel" aria-labelledby="regular-season-completed-tab">
-                <div class="mt-1" v-if="regularSeasonCompletedData.length < 1 && displayTabs">
-                    <p>No regular season data available.</p>
-                </div>
-                <div v-else id="regularSeasonCompletedGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
-                    <div class="col" v-for="dataPoint in regularSeasonCompletedData" :key="dataPoint.id">
-                        <GameCardComponent :data = "dataPoint"></GameCardComponent>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-pane fade" id="regular-season-upcoming" role="tabpanel" aria-labelledby="regular-season-upcoming-tab">
-                <div id="regularSeasonUpcomingGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
-                    <div class="col" v-for="dataPoint in regularSeasonUpcomingData" :key="dataPoint.id">
-                        <GameCardComponent :data = "dataPoint"></GameCardComponent>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-pane fade" id="playoffs-completed" role="tabpanel" aria-labelledby="playoffs-completed-tab">
-                <div class="mt-1" v-if="postSeasonCompletedData.length < 1 && displayTabs">
-                    <p>No playoffs data available.</p>
-                </div>
-                <div v-else id="postSeasonCompletedGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
-                    <div class="col" v-for="dataPoint in postSeasonCompletedData" :key="dataPoint.id">
-                        <GameCardComponent :data = "dataPoint"></GameCardComponent>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-pane fade" id="playoffs-upcoming" role="tabpanel" aria-labelledby="playoffs-upcoming-tab">
-                <div id="postSeasonUpcomingGameInfo" class="row row-cols-1 row-cols-md-3 g-4 mt-1">
-                    <div class="col" v-for="dataPoint in postSeasonUpcomingData" :key="dataPoint.id">
-                        <GameCardComponent :data = "dataPoint"></GameCardComponent>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <transition name="modal">
-            <GameStatsComponent v-if="displayStatsModal" @close="hideStatsModal()"
-                :gameid = "gameid"
+            <GamesTabPaneComponent
+                :tabPaneClass = "'tab-pane fade show active'"
+                :tabPaneId = "'regular-season-completed'"
+                :ariaLabelledby = "'regular-season-completed-tab'"
+                :groupId = "'regular-season-completed-game-info'"
+                :data = "regularSeasonCompletedData"
+                :displayNoDataMsg = "(regularSeasonCompletedData.length < 1 && displayTabs) ? true : false"
+                :noDataMsg = "'No regular season data available.'"
                 :season = "this.season"
-                :statCardTitle = "statCardTitle">
-            </GameStatsComponent>
-        </transition>
+            >
+            </GamesTabPaneComponent>
+
+            <GamesTabPaneComponent
+                :tabPaneClass = "'tab-pane fade'"
+                :tabPaneId = "'regular-season-upcoming'"
+                :ariaLabelledby = "'regular-season-upcoming-tab'"
+                :groupId = "'regular-season-upcoming-game-info'"
+                :data = "regularSeasonUpcomingData"
+                :displayNoDataMsg = "(regularSeasonUpcomingData.length < 1 && displayTabs) ? true : false"
+                :noDataMsg = "'No upcoming regular season data available.'"
+                :season = "this.season"
+            >
+            </GamesTabPaneComponent>
+
+            <GamesTabPaneComponent
+                :tabPaneClass = "'tab-pane fade'"
+                :tabPaneId = "'playoffs-completed'"
+                :ariaLabelledby = "'playoffs-completed-tab'"
+                :groupId = "'playoffs-completed-game-info'"
+                :data = "postSeasonCompletedData"
+                :displayNoDataMsg = "(postSeasonCompletedData.length < 1 && displayTabs) ? true : false"
+                :noDataMsg = "'No playoffs season data available.'"
+                :season = "this.season"
+            >
+            </GamesTabPaneComponent>
+
+            <GamesTabPaneComponent
+                :tabPaneClass = "'tab-pane fade'"
+                :tabPaneId = "'playoffs-upcoming'"
+                :ariaLabelledby = "'playoffs-upcoming-tab'"
+                :groupId = "'playoffs-upcoming-game-info'"
+                :data = "postSeasonUpcomingData"
+                :displayNoDataMsg = "(postSeasonUpcomingData.length < 1 && displayTabs) ? true : false"
+                :noDataMsg = "'No upcoming playoffs season data available.'"
+                :season = "this.season"
+            >
+            </GamesTabPaneComponent>
+        </div>
     </div>
 </template>
 
 <script>
 import axios from 'axios';
-import GameStatsComponent from './GameStatsComponent.vue';
-import GameCardComponent from '@/components/GameCardComponent.vue';
+import GamesTabPaneComponent from '@/components/GamesTabPaneComponent.vue';
 import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
 
     export default {
         name: "GamesInfoComponent",
 
         components: {
-            GameStatsComponent,
-            GameCardComponent,
+            GamesTabPaneComponent,
         },
 
         data() {
@@ -98,9 +98,6 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
                 postSeasonUpcomingData: [],
                 displaySpinner: false,
                 displayTabs: false,
-                displayStatsModal: false,
-                gameid: "",
-                statCardTitle: "",
             };
         },
 
@@ -162,18 +159,6 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
 
             dateFormatter(timestamp) {
                 return timestamp.slice(0, -14);
-            },
-
-            showStatsModal(id, visitorteam, hometeam, date) {
-                this.displayStatsModal = true;
-                this.gameid = id;
-                this.statCardTitle = "Stat Card - " + visitorteam + " vs. " + hometeam + " (" + date + ") "
-            },
-
-            hideStatsModal() {
-                this.displayStatsModal = false;
-                this.gameid = "";
-                this.statCardTitle = "";
             },
 
             // Leaving here in case a potential solution for sorting API data becomes available in future
