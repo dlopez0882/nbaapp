@@ -26,7 +26,7 @@
             </li>
         </ul>
         
-        <GamesTabPaneComponent
+        <GamesTabPaneComponent v-if="!displaySpinner && displayTabs"
             :tabs="[
                 {
                     'displayButton': true,
