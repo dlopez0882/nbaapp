@@ -8,12 +8,21 @@
         <GamesTabComponent v-else-if="!displaySpinner && displayTabs"
             :tabs="[
                 {
+                    'displayButton': (inProgressGameData.length > 0) ? true : false,
+                    'buttonClass': (inProgressGameData.length > 0) ? 'nav-link active' : 'nav-link',
+                    'buttonId': 'in-progress-game-tab',
+                    'dataBsTarget': '#in-progress-game',
+                    'ariaControls': 'in-progress-game',
+                    'ariaSelected': (inProgressGameData.length > 0) ? 'true' : 'false',
+                    'buttonLabel': 'Game in Progress',
+                },
+                {
                     'displayButton': true,
-                    'buttonClass': 'nav-link active',
+                    'buttonClass': (inProgressGameData.length > 0) ? 'nav-link' : 'nav-link active',
                     'buttonId': 'regular-season-completed-tab',
                     'dataBsTarget': '#regular-season-completed',
                     'ariaControls': 'regular-season-completed',
-                    'ariaSelected': 'true',
+                    'ariaSelected': (inProgressGameData.length > 0) ? 'false' : 'true',
                     'buttonLabel': (regularSeasonUpcomingData.length > 0) ? 'Regular Season - Completed' : 'Regular Season',
                 },
                 {
@@ -46,7 +55,14 @@
             ]"
             :panes="[
                 {
-                    'tabPaneClass': 'tab-pane fade show active',
+                    'tabPaneClass': (inProgressGameData.length > 0) ? 'tab-pane fade show active' : 'tab-pane fade',
+                    'tabPaneId': 'in-progress-game',
+                    'ariaLabelledby': 'in-progress-game-tab',
+                    'groupId': 'in-progress-game-info',
+                    'data': inProgressGameData,
+                },
+                {
+                    'tabPaneClass': (inProgressGameData.length > 0) ? 'tab-pane fade' : 'tab-pane fade show active',
                     'tabPaneId': 'regular-season-completed',
                     'ariaLabelledby': 'regular-season-completed-tab',
                     'groupId': 'regular-season-completed-game-info',
@@ -101,6 +117,7 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
 
         data() {
             return {
+                inProgressGameData: [],
                 regularSeasonCompletedData: [],
                 regularSeasonUpcomingData: [],
                 postSeasonCompletedData: [],
@@ -129,13 +146,15 @@ import { nameRetroizer, abbreviationRetroizer } from '../modules/retroizer';
                 ])
                     .then(axios.spread((regular_season_response, postseason_response) => {
                         this.cardDisplayCleanup(regular_season_response.data.data).forEach((item) => {
-                            (item.status.toUpperCase() == "FINAL") ? this.regularSeasonCompletedData.push(item) : this.regularSeasonUpcomingData.push(item);
-                            // if status is in ["1st Qtr", "2nd Qtr", "3rd Qtr", "4th Qtr"] push game to currentGameData?
+                            (item.status.toUpperCase() !== "FINAL") ? 
+                                (item.status.toUpperCase().includes("QTR")) ? this.inProgressGameData.push(item) : this.regularSeasonUpcomingData.push(item) :
+                                this.regularSeasonCompletedData.push(item);
                         });
 
                         this.cardDisplayCleanup(postseason_response.data.data).forEach((item) => {
-                            (item.status.toUpperCase() == "FINAL") ? this.postSeasonCompletedData.push(item) : this.postSeasonUpcomingData.push(item);
-                            // if status is in ["1st Qtr", "2nd Qtr", "3rd Qtr", "4th Qtr"] push game to currentGameData?
+                            (item.status.toUpperCase() !== "FINAL") ? 
+                                (item.status.toUpperCase().includes("QTR")) ? this.inProgressGameData.push(item) : this.postSeasonUpcomingData.push(item) :
+                                this.postSeasonCompletedData.push(item);
                         });
                     }))
                     .catch(error => {
