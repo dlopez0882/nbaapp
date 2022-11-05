@@ -1,3 +1,8 @@
+<!-- 
+    Component to render game information for the selected team and season 
+    "In Progress" game will be the first tab rendered and will be active only if there is a current game in session.
+    Otherwise, "Regular Season - Completed" / "Regular Season" tab will be first rendered and actively selected.  
+-->
 <template>
     <div class="container">
         <div v-if="displaySpinner && !displayTabs" class="d-block text-center">
